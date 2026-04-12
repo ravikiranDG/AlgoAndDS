@@ -1,7 +1,7 @@
 # 📚 AlgoAndDS — Data Structures & Algorithms Interview Prep
 
 > A visually rich, LeetCode-inspired web application for **mid-senior level** Java interview preparation.  
-> 12 in-depth topic guides · 45 curated problems · Built-in Monaco code editor.
+> 12 in-depth topic guides · 73 curated problems · Built-in code execution · Monaco editor.
 
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?logo=tailwindcss)
@@ -90,8 +90,42 @@ AlgoAndDS/
 - **[Next.js 16](https://nextjs.org/)** — React framework with App Router
 - **[Tailwind CSS 4](https://tailwindcss.com/)** — Utility-first styling
 - **[Monaco Editor](https://microsoft.github.io/monaco-editor/)** — VS Code's editor in the browser
+- **[Judge0 CE](https://judge0.com/)** — Free code execution engine (no API key needed)
 - **[Lucide React](https://lucide.dev/)** — Beautiful icons
 - **[react-markdown](https://github.com/remarkjs/react-markdown)** — Markdown rendering with GFM
+
+---
+
+## 🚀 Deploy to Vercel (Recommended)
+
+The app works on Vercel's free tier with **zero configuration** — code execution via Judge0 CE is built-in.
+
+```bash
+# 1. Push to GitHub
+git remote add origin https://github.com/<your-username>/AlgoAndDS.git
+git push -u origin master
+
+# 2. Deploy on Vercel
+#    Go to https://vercel.com/new
+#    Import your GitHub repo
+#    Set Root Directory to: webapp
+#    Click Deploy — that's it!
+```
+
+### Vercel Settings
+| Setting | Value |
+|---------|-------|
+| **Root Directory** | `webapp` |
+| **Framework** | Next.js (auto-detected) |
+| **Build Command** | `npm run build` (default) |
+| **Output Directory** | `.next` (default) |
+
+### Optional Environment Variables
+| Variable | Purpose | Default |
+|----------|---------|---------|
+| `NEXT_PUBLIC_JUDGE0_URL` | Custom Judge0 instance | `https://ce.judge0.com` |
+
+> **Code execution works immediately** — Judge0 CE is free and requires no API key.
 
 ---
 
