@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0f;
+  --foreground: #e2e8f0;
+  --card: #111827;
+  --card-hover: #1e293b;
+  --border: #1e293b;
+  --accent: #10b981;
+  --accent-hover: #059669;
+  --muted: #64748b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+/* Markdown content styling */
+.prose-dark {
+  color: #cbd5e1;
+  line-height: 1.75;
+}
+.prose-dark h1 { color: #f1f5f9; font-size: 2rem; font-weight: 700; margin: 2rem 0 1rem; border-bottom: 1px solid #1e293b; padding-bottom: 0.5rem; }
+.prose-dark h2 { color: #f1f5f9; font-size: 1.5rem; font-weight: 600; margin: 1.75rem 0 0.75rem; }
+.prose-dark h3 { color: #e2e8f0; font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+.prose-dark h4 { color: #e2e8f0; font-size: 1.1rem; font-weight: 600; margin: 1.25rem 0 0.5rem; }
+.prose-dark p { margin: 0.75rem 0; }
+.prose-dark a { color: #10b981; text-decoration: underline; }
+.prose-dark strong { color: #f1f5f9; }
+.prose-dark ul, .prose-dark ol { margin: 0.5rem 0; padding-left: 1.5rem; }
+.prose-dark li { margin: 0.25rem 0; }
+.prose-dark code {
+  background: #1e293b;
+  color: #10b981;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.875em;
+  font-family: var(--font-mono), monospace;
+}
+.prose-dark pre {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+.prose-dark pre code {
+  background: transparent;
+  color: #e2e8f0;
+  padding: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.prose-dark blockquote {
+  border-left: 3px solid #10b981;
+  padding-left: 1rem;
+  color: #94a3b8;
+  margin: 1rem 0;
+  font-style: italic;
+}
+.prose-dark table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+.prose-dark th { background: #1e293b; color: #f1f5f9; padding: 0.5rem 0.75rem; text-align: left; font-weight: 600; border: 1px solid #334155; }
+.prose-dark td { padding: 0.5rem 0.75rem; border: 1px solid #1e293b; }
+.prose-dark tr:nth-child(even) { background: rgba(30, 41, 59, 0.3); }
+.prose-dark hr { border-color: #1e293b; margin: 2rem 0; }
+.prose-dark img { border-radius: 8px; max-width: 100%; }
