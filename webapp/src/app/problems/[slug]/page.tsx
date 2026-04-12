@@ -13,6 +13,11 @@ import ExecutionPanel from "../../../components/ExecutionPanel";
 import { problems } from "../../../data/problems";
 import type { ExecutionResult } from "../../../lib/executor";
 
+interface ExtendedExecutionResult extends ExecutionResult {
+  noEndpoint?: boolean;
+  javaSource?: string;
+}
+
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
@@ -60,7 +65,7 @@ export default function ProblemDetailPage({ params }: PageProps) {
   const problem = problems.find((p: { slug: string }) => p.slug === slug);
   const [activeTab, setActiveTab] = useState<"description" | "hints" | "testcases" | "output">("description");
   const [code, setCode] = useState("");
-  const [executionResult, setExecutionResult] = useState<ExecutionResult | null>(null);
+  const [executionResult, setExecutionResult] = useState<ExtendedExecutionResult | null>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
   const [runnerConfig, setRunnerConfig] = useState<Record<string, unknown> | null>(null);
@@ -93,7 +98,7 @@ export default function ProblemDetailPage({ params }: PageProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userCode: code, runnerConfig }),
       });
-      const result: ExecutionResult = await res.json();
+      const result: ExtendedExecutionResult = await res.json();
       setExecutionResult(result);
       if (result.success) {
         const done = JSON.parse(localStorage.getItem("completedProblems") || "[]");

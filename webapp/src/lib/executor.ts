@@ -1,5 +1,6 @@
-// Code execution provider abstraction using Piston API
-const PISTON_URL = "https://emkc.org/api/v2/piston/execute";
+// Code execution provider abstraction
+// Configure via NEXT_PUBLIC_PISTON_URL env variable, or falls back to local-only mode
+const PISTON_URL = process.env.NEXT_PUBLIC_PISTON_URL || "";
 
 export interface ExecutionResult {
   success: boolean;
@@ -245,6 +246,10 @@ export function parseExecutionOutput(stdout: string, stderr: string, exitCode: n
 export async function executeCode(
   javaSource: string
 ): Promise<{ stdout: string; stderr: string; exitCode: number }> {
+  if (!PISTON_URL) {
+    throw new Error("NO_ENDPOINT");
+  }
+
   const response = await fetch(PISTON_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -265,7 +270,6 @@ export async function executeCode(
 
   const data = await response.json();
 
-  // Check for compile errors
   if (data.compile && data.compile.code !== 0) {
     return {
       stdout: "",

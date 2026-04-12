@@ -1,15 +1,37 @@
 "use client";
 
-import { CheckCircle2, XCircle, AlertTriangle, Loader2, Clock, Zap, Terminal } from "lucide-react";
+import { useState } from "react";
+import { CheckCircle2, XCircle, AlertTriangle, Loader2, Clock, Zap, Terminal, Copy, Check, FileCode } from "lucide-react";
 import type { ExecutionResult } from "../lib/executor";
 
+interface ExtendedResult extends ExecutionResult {
+  noEndpoint?: boolean;
+  javaSource?: string;
+}
+
 interface ExecutionPanelProps {
-  result: ExecutionResult | null;
+  result: ExtendedResult | null;
   isRunning: boolean;
   expectedComplexity?: { time: string; space: string };
 }
 
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <button onClick={handleCopy} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-all">
+      {copied ? <><Check size={12} />Copied!</> : <><Copy size={12} />Copy Java Code</>}
+    </button>
+  );
+}
+
 export default function ExecutionPanel({ result, isRunning, expectedComplexity }: ExecutionPanelProps) {
+  const [showSource, setShowSource] = useState(false);
+
   if (isRunning) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-slate-400">
@@ -26,6 +48,53 @@ export default function ExecutionPanel({ result, isRunning, expectedComplexity }
         <Terminal size={32} className="mb-3 opacity-50" />
         <p className="text-sm">Click <span className="text-emerald-400 font-semibold">Run Code</span> to execute your solution</p>
         <p className="text-xs text-slate-600 mt-1">Your code will be compiled and tested against sample test cases</p>
+      </div>
+    );
+  }
+
+  // No execution endpoint — show "Run Locally" instructions
+  if (result.noEndpoint && result.javaSource) {
+    return (
+      <div className="p-4 space-y-4">
+        <div className="rounded-lg border border-cyan-500/20 bg-cyan-500/5 p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <FileCode size={18} className="text-cyan-400" />
+            <span className="text-sm font-semibold text-cyan-400">Run Locally</span>
+          </div>
+          <p className="text-sm text-slate-400 mb-3">
+            Copy the generated test file below and run it with Java on your machine:
+          </p>
+          <div className="flex items-center gap-2 mb-3">
+            <CopyButton text={result.javaSource} />
+          </div>
+          <div className="rounded-lg bg-slate-900 border border-slate-700 p-3 text-xs font-mono text-slate-400">
+            <div className="text-cyan-400 mb-1"># Run these commands:</div>
+            <div>javac Main.java</div>
+            <div>java Main</div>
+          </div>
+          {!showSource ? (
+            <button onClick={() => setShowSource(true)} className="mt-3 text-xs text-slate-500 hover:text-slate-300 transition-colors underline">
+              Show generated Java source
+            </button>
+          ) : (
+            <pre className="mt-3 rounded-lg bg-[#0f172a] border border-slate-700 p-3 text-xs text-slate-300 font-mono overflow-x-auto max-h-80 overflow-y-auto">
+              {result.javaSource}
+            </pre>
+          )}
+        </div>
+
+        {expectedComplexity && (
+          <div className="rounded-lg border border-slate-700 bg-slate-800/30 p-3">
+            <div className="flex items-center gap-2 mb-2">
+              <Zap size={14} className="text-cyan-400" />
+              <span className="text-xs font-semibold text-cyan-400">Expected Optimal Complexity</span>
+            </div>
+            <div className="flex gap-6 text-xs">
+              <div><span className="text-slate-500">Time: </span><span className="text-white font-mono">{expectedComplexity.time}</span></div>
+              <div><span className="text-slate-500">Space: </span><span className="text-white font-mono">{expectedComplexity.space}</span></div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
