@@ -1,5 +1,5 @@
 // ============================================================================
-// problems.ts - 45 DS&A Interview Problems (Problem Definitions Only)
+// problems.ts - 73 DS&A Interview Problems (Problem Definitions Only)
 // ============================================================================
 
 export interface Example {
@@ -1871,6 +1871,1114 @@ public class Solution {
       { input: 'nums = [1,-1], k = 1', expectedOutput: '[1,-1]' },
       { input: 'nums = [9,11], k = 2', expectedOutput: '[11]' },
       { input: 'nums = [4,-2], k = 2', expectedOutput: '[4]' },
+    ],
+  },
+  // ===================== NEW PROBLEMS (46-73) =====================
+  {
+    slug: 'binary-search',
+    title: 'Binary Search',
+    difficulty: 'Easy',
+    category: 'Arrays & Strings',
+    categorySlug: 'arrays-and-strings',
+    description: `Given a sorted array of integers \`nums\` and a target value \`target\`, return the index of \`target\` if it is found. If not, return \`-1\`.
+
+You must write an algorithm with \`O(log n)\` runtime complexity.`,
+    examples: [
+      { input: 'nums = [-1,0,3,5,9,12], target = 9', output: '4', explanation: '9 exists in nums and its index is 4.' },
+      { input: 'nums = [-1,0,3,5,9,12], target = 2', output: '-1', explanation: '2 does not exist in nums so return -1.' },
+    ],
+    constraints: ['1 <= nums.length <= 10^4', '-10^4 < nums[i], target < 10^4', 'All integers in nums are unique.', 'nums is sorted in ascending order.'],
+    hints: [
+      'Compare the target with the middle element of the array.',
+      'If the target is less than the middle element, search the left half; if greater, search the right half.',
+      'Use two pointers (left, right) and repeatedly halve the search space until you find the target or the pointers cross.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Search for target in sorted array nums.
+     * Return its index or -1 if not found.
+     */
+    public int search(int[] nums, int target) {
+        // Your code here
+        return -1;
+    }
+}`,
+    testCases: [
+      { input: 'nums = [-1,0,3,5,9,12], target = 9', expectedOutput: '4' },
+      { input: 'nums = [-1,0,3,5,9,12], target = 2', expectedOutput: '-1' },
+      { input: 'nums = [5], target = 5', expectedOutput: '0' },
+      { input: 'nums = [2,5], target = 5', expectedOutput: '1' },
+    ],
+  },
+  {
+    slug: 'maximum-subarray',
+    title: 'Maximum Subarray',
+    difficulty: 'Medium',
+    category: 'Arrays & Strings',
+    categorySlug: 'arrays-and-strings',
+    description: `Given an integer array \`nums\`, find the subarray with the largest sum, and return its sum.
+
+A **subarray** is a contiguous non-empty sequence of elements within an array.`,
+    examples: [
+      { input: 'nums = [-2,1,-3,4,-1,2,1,-5,4]', output: '6', explanation: 'The subarray [4,-1,2,1] has the largest sum 6.' },
+      { input: 'nums = [1]', output: '1', explanation: 'The subarray [1] has the largest sum 1.' },
+      { input: 'nums = [5,4,-1,7,8]', output: '23', explanation: 'The subarray [5,4,-1,7,8] has the largest sum 23.' },
+    ],
+    constraints: ['1 <= nums.length <= 10^5', '-10^4 <= nums[i] <= 10^4'],
+    hints: [
+      'Think about when it makes sense to extend the current subarray vs. start a new one.',
+      'If the running sum becomes negative, it is better to start fresh from the next element.',
+      'Use Kadane\'s algorithm: maintain a current sum and a global max. At each step, currentSum = max(nums[i], currentSum + nums[i]).',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Find the contiguous subarray with the largest sum.
+     */
+    public int maxSubArray(int[] nums) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'nums = [-2,1,-3,4,-1,2,1,-5,4]', expectedOutput: '6' },
+      { input: 'nums = [1]', expectedOutput: '1' },
+      { input: 'nums = [5,4,-1,7,8]', expectedOutput: '23' },
+      { input: 'nums = [-1]', expectedOutput: '-1' },
+    ],
+  },
+  {
+    slug: 'rotate-array',
+    title: 'Rotate Array',
+    difficulty: 'Medium',
+    category: 'Arrays & Strings',
+    categorySlug: 'arrays-and-strings',
+    description: `Given an integer array \`nums\`, rotate the array to the right by \`k\` steps, where \`k\` is non-negative.
+
+Return the rotated array. Try to come up with as many solutions as you can — there are at least **three** different ways to solve this problem. Could you do it in-place with \`O(1)\` extra space?`,
+    examples: [
+      { input: 'nums = [1,2,3,4,5,6,7], k = 3', output: '[5,6,7,1,2,3,4]', explanation: 'Rotate right 1 step: [7,1,2,3,4,5,6]. Rotate right 2 steps: [6,7,1,2,3,4,5]. Rotate right 3 steps: [5,6,7,1,2,3,4].' },
+      { input: 'nums = [-1,-100,3,99], k = 2', output: '[3,99,-1,-100]', explanation: 'Rotate right 1 step: [99,-1,-100,3]. Rotate right 2 steps: [3,99,-1,-100].' },
+    ],
+    constraints: ['1 <= nums.length <= 10^5', '-2^31 <= nums[i] <= 2^31 - 1', '0 <= k <= 10^5'],
+    hints: [
+      'What happens if k is greater than the array length? Use k % nums.length.',
+      'One approach: reverse the entire array, then reverse the first k elements, then reverse the rest.',
+      'The three-reverse approach works in O(n) time and O(1) space.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Rotate array to the right by k steps.
+     */
+    public int[] rotate(int[] nums, int k) {
+        // Your code here
+        return nums;
+    }
+}`,
+    testCases: [
+      { input: 'nums = [1,2,3,4,5,6,7], k = 3', expectedOutput: '[5,6,7,1,2,3,4]' },
+      { input: 'nums = [-1,-100,3,99], k = 2', expectedOutput: '[3,99,-1,-100]' },
+      { input: 'nums = [1,2], k = 3', expectedOutput: '[2,1]' },
+      { input: 'nums = [1], k = 0', expectedOutput: '[1]' },
+    ],
+  },
+  {
+    slug: 'spiral-matrix',
+    title: 'Spiral Matrix',
+    difficulty: 'Medium',
+    category: 'Arrays & Strings',
+    categorySlug: 'arrays-and-strings',
+    description: `Given an \`m x n\` matrix, return all elements of the matrix in **spiral order**.
+
+Spiral order starts from the top-left corner and proceeds right across the top row, then down the right column, then left across the bottom row, then up the left column, and repeats inward.`,
+    examples: [
+      { input: 'matrix = [[1,2,3],[4,5,6],[7,8,9]]', output: '[1,2,3,6,9,8,7,4,5]', explanation: 'Traverse the matrix in spiral order starting from top-left.' },
+      { input: 'matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]', output: '[1,2,3,4,8,12,11,10,9,5,6,7]' },
+    ],
+    constraints: ['m == matrix.length', 'n == matrix[i].length', '1 <= m, n <= 10', '-100 <= matrix[i][j] <= 100'],
+    hints: [
+      'Maintain four boundaries: top, bottom, left, right. Process one layer at a time.',
+      'After traversing each direction (right, down, left, up), shrink the corresponding boundary.',
+      'Be careful with the termination condition — check boundaries after each direction to avoid duplicates.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return all elements of the matrix in spiral order.
+     */
+    public List<Integer> spiralOrder(int[][] matrix) {
+        // Your code here
+        return new ArrayList<>();
+    }
+}`,
+    testCases: [
+      { input: 'matrix = [[1,2,3],[4,5,6],[7,8,9]]', expectedOutput: '[1,2,3,6,9,8,7,4,5]' },
+      { input: 'matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]', expectedOutput: '[1,2,3,4,8,12,11,10,9,5,6,7]' },
+      { input: 'matrix = [[1]]', expectedOutput: '[1]' },
+      { input: 'matrix = [[1,2],[3,4]]', expectedOutput: '[1,2,4,3]' },
+    ],
+  },
+  {
+    slug: 'remove-nth-from-end',
+    title: 'Remove Nth Node From End of List',
+    difficulty: 'Medium',
+    category: 'Linked Lists',
+    categorySlug: 'linked-lists',
+    description: `Given the \`head\` of a linked list, remove the \`n\`th node from the **end** of the list and return its head.
+
+Follow up: Could you do this in one pass?`,
+    examples: [
+      { input: 'head = [1,2,3,4,5], n = 2', output: '[1,2,3,5]', explanation: 'The 2nd node from the end is 4. After removing it, the list becomes [1,2,3,5].' },
+      { input: 'head = [1], n = 1', output: '[]', explanation: 'The only node is removed, resulting in an empty list.' },
+      { input: 'head = [1,2], n = 1', output: '[1]' },
+    ],
+    constraints: ['The number of nodes in the list is sz.', '1 <= sz <= 30', '0 <= Node.val <= 100', '1 <= n <= sz'],
+    hints: [
+      'Use two pointers separated by n nodes so that when the fast pointer reaches the end, the slow pointer is right before the target.',
+      'Advance the fast pointer n steps first. Then move both pointers until fast reaches the end.',
+      'Use a dummy head node to simplify edge cases where the head itself needs to be removed.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Definition for singly-linked list.
+     */
+    static class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int val) { this.val = val; }
+    }
+
+    /**
+     * Remove the nth node from the end of the list.
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        // Your code here
+        return head;
+    }
+}`,
+    testCases: [
+      { input: 'head = [1,2,3,4,5], n = 2', expectedOutput: '[1,2,3,5]' },
+      { input: 'head = [1], n = 1', expectedOutput: '[]' },
+      { input: 'head = [1,2], n = 1', expectedOutput: '[1]' },
+      { input: 'head = [1,2], n = 2', expectedOutput: '[2]' },
+    ],
+  },
+  {
+    slug: 'reorder-list',
+    title: 'Reorder List',
+    difficulty: 'Medium',
+    category: 'Linked Lists',
+    categorySlug: 'linked-lists',
+    description: `You are given the head of a singly linked-list: L0 → L1 → … → Ln-1 → Ln.
+
+Reorder the list to be: L0 → Ln → L1 → Ln-1 → L2 → Ln-2 → …
+
+You may not modify the values in the list's nodes. Only nodes themselves may be changed.`,
+    examples: [
+      { input: 'head = [1,2,3,4]', output: '[1,4,2,3]', explanation: 'The list is reordered by interleaving from front and back.' },
+      { input: 'head = [1,2,3,4,5]', output: '[1,5,2,4,3]' },
+    ],
+    constraints: ['The number of nodes is in the range [1, 5 * 10^4].', '1 <= Node.val <= 1000'],
+    hints: [
+      'Break the problem into three steps: find the middle, reverse the second half, merge the two halves.',
+      'Use the slow/fast pointer technique to find the middle of the linked list.',
+      'After reversing the second half, merge the two lists by alternating nodes.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    static class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int val) { this.val = val; }
+    }
+
+    /**
+     * Reorder list: L0→Ln→L1→Ln-1→L2→Ln-2→...
+     */
+    public void reorderList(ListNode head) {
+        // Your code here
+    }
+}`,
+    testCases: [
+      { input: 'head = [1,2,3,4]', expectedOutput: '[1,4,2,3]' },
+      { input: 'head = [1,2,3,4,5]', expectedOutput: '[1,5,2,4,3]' },
+      { input: 'head = [1]', expectedOutput: '[1]' },
+      { input: 'head = [1,2]', expectedOutput: '[1,2]' },
+    ],
+  },
+  {
+    slug: 'evaluate-reverse-polish',
+    title: 'Evaluate Reverse Polish Notation',
+    difficulty: 'Medium',
+    category: 'Stacks & Queues',
+    categorySlug: 'stacks-and-queues',
+    description: `You are given an array of strings \`tokens\` that represents an arithmetic expression in **Reverse Polish Notation** (postfix notation).
+
+Evaluate the expression and return an integer that represents the value of the expression.
+
+Note: Division between two integers should truncate toward zero. The given RPN expression is always valid.`,
+    examples: [
+      { input: 'tokens = ["2","1","+","3","*"]', output: '9', explanation: '((2 + 1) * 3) = 9' },
+      { input: 'tokens = ["4","13","5","/","+"]', output: '6', explanation: '(4 + (13 / 5)) = 6' },
+      { input: 'tokens = ["10","6","9","3","+","-11","*","/","*","17","+","5","+"]', output: '22' },
+    ],
+    constraints: ['1 <= tokens.length <= 10^4', 'tokens[i] is either an operator (+, -, *, /) or an integer in the range [-200, 200].'],
+    hints: [
+      'Use a stack. Push numbers onto it; when you see an operator, pop two numbers, compute the result, and push it back.',
+      'Be careful about the order of operands for subtraction and division — the second popped element is the left operand.',
+      'In Java, integer division naturally truncates toward zero, which is what we want.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Evaluate the expression in Reverse Polish Notation.
+     */
+    public int evalRPN(String[] tokens) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'tokens = ["2","1","+","3","*"]', expectedOutput: '9' },
+      { input: 'tokens = ["4","13","5","/","+"]', expectedOutput: '6' },
+      { input: 'tokens = ["10","6","9","3","+","-11","*","/","*","17","+","5","+"]', expectedOutput: '22' },
+      { input: 'tokens = ["3"]', expectedOutput: '3' },
+    ],
+  },
+  {
+    slug: 'asteroid-collision',
+    title: 'Asteroid Collision',
+    difficulty: 'Medium',
+    category: 'Stacks & Queues',
+    categorySlug: 'stacks-and-queues',
+    description: `We are given an array \`asteroids\` of integers representing asteroids in a row. For each asteroid, the absolute value represents its size, and the sign represents its direction (positive = moving right, negative = moving left). Each asteroid moves at the same speed.
+
+Find out the state of the asteroids after all collisions. If two asteroids meet, the smaller one will explode. If both are the same size, both will explode. Two asteroids moving in the same direction will never meet.`,
+    examples: [
+      { input: 'asteroids = [5,10,-5]', output: '[5,10]', explanation: 'The 10 and -5 collide; 10 survives. The 5 and 10 never collide.' },
+      { input: 'asteroids = [8,-8]', output: '[]', explanation: 'The 8 and -8 collide and both are destroyed.' },
+      { input: 'asteroids = [10,2,-5]', output: '[10]', explanation: 'The 2 and -5 collide; -5 survives. Then 10 and -5 collide; 10 survives.' },
+    ],
+    constraints: ['2 <= asteroids.length <= 10^4', '-1000 <= asteroids[i] <= 1000', 'asteroids[i] != 0'],
+    hints: [
+      'Use a stack to simulate the collisions. Push each asteroid and resolve collisions with the stack top.',
+      'A collision only happens when the top of the stack is positive and the current asteroid is negative.',
+      'Keep popping from the stack while there is a collision and the incoming asteroid is larger.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return the state of asteroids after all collisions.
+     */
+    public int[] asteroidCollision(int[] asteroids) {
+        // Your code here
+        return new int[]{};
+    }
+}`,
+    testCases: [
+      { input: 'asteroids = [5,10,-5]', expectedOutput: '[5,10]' },
+      { input: 'asteroids = [8,-8]', expectedOutput: '[]' },
+      { input: 'asteroids = [10,2,-5]', expectedOutput: '[10]' },
+      { input: 'asteroids = [-2,-1,1,2]', expectedOutput: '[-2,-1,1,2]' },
+    ],
+  },
+  {
+    slug: 'invert-binary-tree',
+    title: 'Invert Binary Tree',
+    difficulty: 'Easy',
+    category: 'Trees',
+    categorySlug: 'trees',
+    description: `Given the \`root\` of a binary tree, invert the tree (mirror it), and return its root.
+
+Inverting a binary tree means swapping the left and right children of every node in the tree.`,
+    examples: [
+      { input: 'root = [4,2,7,1,3,6,9]', output: '[4,7,2,9,6,3,1]', explanation: 'Every node\'s left and right children are swapped.' },
+      { input: 'root = [2,1,3]', output: '[2,3,1]' },
+      { input: 'root = []', output: '[]' },
+    ],
+    constraints: ['The number of nodes in the tree is in the range [0, 100].', '-100 <= Node.val <= 100'],
+    hints: [
+      'Think recursively: to invert a tree, invert the left and right subtrees, then swap them.',
+      'The base case is a null node — just return null.',
+      'You can also solve this iteratively using a queue (BFS) and swapping children at each level.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    static class TreeNode {
+        int val;
+        TreeNode left, right;
+        TreeNode(int val) { this.val = val; }
+    }
+
+    /**
+     * Invert (mirror) the binary tree.
+     */
+    public TreeNode invertTree(TreeNode root) {
+        // Your code here
+        return null;
+    }
+}`,
+    testCases: [
+      { input: 'root = [4,2,7,1,3,6,9]', expectedOutput: '[4,7,2,9,6,3,1]' },
+      { input: 'root = [2,1,3]', expectedOutput: '[2,3,1]' },
+      { input: 'root = []', expectedOutput: '[]' },
+      { input: 'root = [1]', expectedOutput: '[1]' },
+    ],
+  },
+  {
+    slug: 'diameter-of-binary-tree',
+    title: 'Diameter of Binary Tree',
+    difficulty: 'Easy',
+    category: 'Trees',
+    categorySlug: 'trees',
+    description: `Given the \`root\` of a binary tree, return the length of the **diameter** of the tree.
+
+The **diameter** of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the \`root\`. The length of a path between two nodes is represented by the number of **edges** between them.`,
+    examples: [
+      { input: 'root = [1,2,3,4,5]', output: '3', explanation: 'The longest path is [4,2,1,3] or [5,2,1,3], which has length 3.' },
+      { input: 'root = [1,2]', output: '1' },
+    ],
+    constraints: ['The number of nodes in the tree is in the range [1, 10^4].', '-100 <= Node.val <= 100'],
+    hints: [
+      'The diameter through any node is the sum of the height of its left subtree and the height of its right subtree.',
+      'Use a recursive function that returns the height of each subtree while updating a global maximum diameter.',
+      'The height of a node is 1 + max(height of left child, height of right child). The diameter at each node is leftHeight + rightHeight.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    static class TreeNode {
+        int val;
+        TreeNode left, right;
+        TreeNode(int val) { this.val = val; }
+    }
+
+    /**
+     * Return the diameter (longest path length) of the binary tree.
+     */
+    public int diameterOfBinaryTree(TreeNode root) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'root = [1,2,3,4,5]', expectedOutput: '3' },
+      { input: 'root = [1,2]', expectedOutput: '1' },
+      { input: 'root = [1]', expectedOutput: '0' },
+      { input: 'root = [1,2,3,null,null,4,5]', expectedOutput: '3' },
+    ],
+  },
+  {
+    slug: 'binary-tree-right-side-view',
+    title: 'Binary Tree Right Side View',
+    difficulty: 'Medium',
+    category: 'Trees',
+    categorySlug: 'trees',
+    description: `Given the \`root\` of a binary tree, imagine yourself standing on the **right side** of it. Return the values of the nodes you can see ordered from top to bottom.
+
+In other words, return the last node at each level of the tree when traversing level by level.`,
+    examples: [
+      { input: 'root = [1,2,3,null,5,null,4]', output: '[1,3,4]', explanation: 'From the right side: level 0 shows 1, level 1 shows 3, level 2 shows 4.' },
+      { input: 'root = [1,null,3]', output: '[1,3]' },
+      { input: 'root = []', output: '[]' },
+    ],
+    constraints: ['The number of nodes in the tree is in the range [0, 100].', '-100 <= Node.val <= 100'],
+    hints: [
+      'Use BFS (level-order traversal) and take the last element from each level.',
+      'Alternatively, use DFS and visit the right subtree before the left. The first node seen at each depth is the rightmost.',
+      'With BFS, use a queue and iterate through each level. The last node dequeued in each level is visible from the right.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    static class TreeNode {
+        int val;
+        TreeNode left, right;
+        TreeNode(int val) { this.val = val; }
+    }
+
+    /**
+     * Return values of nodes visible from the right side.
+     */
+    public List<Integer> rightSideView(TreeNode root) {
+        // Your code here
+        return new ArrayList<>();
+    }
+}`,
+    testCases: [
+      { input: 'root = [1,2,3,null,5,null,4]', expectedOutput: '[1,3,4]' },
+      { input: 'root = [1,null,3]', expectedOutput: '[1,3]' },
+      { input: 'root = []', expectedOutput: '[]' },
+      { input: 'root = [1,2,3,4]', expectedOutput: '[1,3,4]' },
+    ],
+  },
+  {
+    slug: 'task-scheduler',
+    title: 'Task Scheduler',
+    difficulty: 'Medium',
+    category: 'Heaps',
+    categorySlug: 'heaps',
+    description: `You are given an array of CPU tasks, each represented by a character, and a cooling interval \`n\`. Each cycle allows completion of one task. There must be at least \`n\` intervals between two same tasks.
+
+Return the minimum number of intervals the CPU will take to finish all the given tasks. You may complete tasks in any order.`,
+    examples: [
+      { input: 'tasks = ["A","A","A","B","B","B"], n = 2', output: '8', explanation: 'One possible sequence: A -> B -> idle -> A -> B -> idle -> A -> B. Total = 8.' },
+      { input: 'tasks = ["A","C","A","B","D","B"], n = 1', output: '6', explanation: 'A -> B -> A -> C -> B -> D. No idle intervals needed.' },
+      { input: 'tasks = ["A","A","A","B","B","B"], n = 0', output: '6', explanation: 'No cooldown required, so all 6 tasks execute consecutively.' },
+    ],
+    constraints: ['1 <= tasks.length <= 10^4', 'tasks[i] is an uppercase English letter.', '0 <= n <= 100'],
+    hints: [
+      'The task with the highest frequency dictates the minimum intervals. Think about filling slots around the most frequent task.',
+      'Calculate the number of idle slots: (maxFreq - 1) * n. Then fill idle slots with other tasks.',
+      'Use a greedy approach: the answer is max(tasks.length, (maxFreq - 1) * (n + 1) + countOfMaxFreqTasks).',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return the minimum intervals to complete all tasks with cooldown n.
+     */
+    public int leastInterval(char[] tasks, int n) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'tasks = ["A","A","A","B","B","B"], n = 2', expectedOutput: '8' },
+      { input: 'tasks = ["A","C","A","B","D","B"], n = 1', expectedOutput: '6' },
+      { input: 'tasks = ["A","A","A","B","B","B"], n = 0', expectedOutput: '6' },
+      { input: 'tasks = ["A","A","A","A","A","A","B","C","D","E","F","G"], n = 1', expectedOutput: '12' },
+    ],
+  },
+  {
+    slug: 'rotting-oranges',
+    title: 'Rotting Oranges',
+    difficulty: 'Medium',
+    category: 'Graphs',
+    categorySlug: 'graphs',
+    description: `You are given an \`m x n\` grid where each cell can have one of three values:
+- \`0\` representing an empty cell,
+- \`1\` representing a fresh orange,
+- \`2\` representing a rotten orange.
+
+Every minute, any fresh orange that is **4-directionally adjacent** to a rotten orange becomes rotten.
+
+Return the minimum number of minutes that must elapse until no cell has a fresh orange. If this is impossible, return \`-1\`.`,
+    examples: [
+      { input: 'grid = [[2,1,1],[1,1,0],[0,1,1]]', output: '4', explanation: 'It takes 4 minutes for all fresh oranges to rot via BFS from initial rotten oranges.' },
+      { input: 'grid = [[2,1,1],[0,1,1],[1,0,1]]', output: '-1', explanation: 'The orange at (2,0) can never be reached.' },
+      { input: 'grid = [[0,2]]', output: '0', explanation: 'No fresh oranges exist, so 0 minutes needed.' },
+    ],
+    constraints: ['m == grid.length', 'n == grid[i].length', '1 <= m, n <= 10', 'grid[i][j] is 0, 1, or 2.'],
+    hints: [
+      'This is a multi-source BFS problem. Start BFS from all rotten oranges simultaneously.',
+      'Add all initial rotten oranges to the queue. Each BFS layer represents one minute.',
+      'After BFS completes, check if any fresh orange remains. If so, return -1.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return minutes until no fresh orange remains, or -1 if impossible.
+     */
+    public int orangesRotting(int[][] grid) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'grid = [[2,1,1],[1,1,0],[0,1,1]]', expectedOutput: '4' },
+      { input: 'grid = [[2,1,1],[0,1,1],[1,0,1]]', expectedOutput: '-1' },
+      { input: 'grid = [[0,2]]', expectedOutput: '0' },
+      { input: 'grid = [[1]]', expectedOutput: '-1' },
+    ],
+  },
+  {
+    slug: 'pacific-atlantic-water-flow',
+    title: 'Pacific Atlantic Water Flow',
+    difficulty: 'Medium',
+    category: 'Graphs',
+    categorySlug: 'graphs',
+    description: `There is an \`m x n\` rectangular island that borders both the Pacific Ocean and Atlantic Ocean. The Pacific Ocean touches the island's left and top edges, and the Atlantic Ocean touches the island's right and bottom edges.
+
+The island receives rain. Water can flow from a cell to an adjacent cell (up, down, left, right) if the adjacent cell's height is **less than or equal to** the current cell's height.
+
+Return a 2D list of grid coordinates \`[r, c]\` where rain water can flow to **both** the Pacific and Atlantic ocean.`,
+    examples: [
+      { input: 'heights = [[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]', output: '[[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]]', explanation: 'These cells can reach both the Pacific (top/left) and Atlantic (bottom/right) oceans.' },
+      { input: 'heights = [[1]]', output: '[[0,0]]' },
+    ],
+    constraints: ['m == heights.length', 'n == heights[r].length', '1 <= m, n <= 200', '0 <= heights[r][c] <= 10^5'],
+    hints: [
+      'Instead of checking if each cell can reach both oceans, reverse the problem: start from each ocean and find which cells can be reached.',
+      'Run BFS/DFS from all Pacific border cells and mark reachable cells. Do the same from Atlantic border cells.',
+      'The answer is the intersection of cells reachable from both oceans.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return coordinates where water can flow to both oceans.
+     */
+    public List<List<Integer>> pacificAtlantic(int[][] heights) {
+        // Your code here
+        return new ArrayList<>();
+    }
+}`,
+    testCases: [
+      { input: 'heights = [[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]', expectedOutput: '[[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]]' },
+      { input: 'heights = [[1]]', expectedOutput: '[[0,0]]' },
+      { input: 'heights = [[1,1],[1,1]]', expectedOutput: '[[0,0],[0,1],[1,0],[1,1]]' },
+    ],
+  },
+  {
+    slug: 'graph-valid-tree',
+    title: 'Graph Valid Tree',
+    difficulty: 'Medium',
+    category: 'Graphs',
+    categorySlug: 'graphs',
+    description: `You have a graph of \`n\` nodes labeled from \`0\` to \`n - 1\`. You are given the integer \`n\` and a list of \`edges\` where \`edges[i] = [a, b]\` indicates that there is an undirected edge between nodes \`a\` and \`b\`.
+
+Determine if these edges make up a valid tree. A valid tree is a connected, acyclic undirected graph.`,
+    examples: [
+      { input: 'n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]', output: 'true', explanation: 'The graph is connected and has n-1 = 4 edges with no cycle, so it is a valid tree.' },
+      { input: 'n = 5, edges = [[0,1],[1,2],[2,3],[1,3],[1,4]]', output: 'false', explanation: 'There is a cycle between nodes 1, 2, and 3.' },
+    ],
+    constraints: ['1 <= n <= 2000', '0 <= edges.length <= 5000', 'edges[i].length == 2', '0 <= a, b < n', 'a != b', 'There are no duplicate edges.'],
+    hints: [
+      'A valid tree with n nodes must have exactly n - 1 edges. If not, return false immediately.',
+      'After confirming the edge count, check connectivity using BFS, DFS, or Union-Find.',
+      'With Union-Find: for each edge, union the two nodes. If they are already in the same set, there is a cycle.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Determine if the undirected graph forms a valid tree.
+     */
+    public boolean validTree(int n, int[][] edges) {
+        // Your code here
+        return false;
+    }
+}`,
+    testCases: [
+      { input: 'n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]', expectedOutput: 'true' },
+      { input: 'n = 5, edges = [[0,1],[1,2],[2,3],[1,3],[1,4]]', expectedOutput: 'false' },
+      { input: 'n = 1, edges = []', expectedOutput: 'true' },
+      { input: 'n = 4, edges = [[0,1],[2,3]]', expectedOutput: 'false' },
+    ],
+  },
+  {
+    slug: 'climbing-stairs',
+    title: 'Climbing Stairs',
+    difficulty: 'Easy',
+    category: 'Dynamic Programming',
+    categorySlug: 'dynamic-programming',
+    description: `You are climbing a staircase. It takes \`n\` steps to reach the top. Each time you can either climb \`1\` or \`2\` steps.
+
+In how many distinct ways can you climb to the top?`,
+    examples: [
+      { input: 'n = 2', output: '2', explanation: 'There are two ways: (1 step + 1 step) or (2 steps).' },
+      { input: 'n = 3', output: '3', explanation: 'There are three ways: (1+1+1), (1+2), (2+1).' },
+    ],
+    constraints: ['1 <= n <= 45'],
+    hints: [
+      'This is similar to the Fibonacci sequence. The number of ways to reach step n depends on steps n-1 and n-2.',
+      'Define dp[i] = number of ways to reach step i. Then dp[i] = dp[i-1] + dp[i-2].',
+      'You only need the last two values, so you can optimize space to O(1).',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return the number of distinct ways to climb n stairs.
+     */
+    public int climbStairs(int n) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'n = 2', expectedOutput: '2' },
+      { input: 'n = 3', expectedOutput: '3' },
+      { input: 'n = 1', expectedOutput: '1' },
+      { input: 'n = 5', expectedOutput: '8' },
+    ],
+  },
+  {
+    slug: 'word-break',
+    title: 'Word Break',
+    difficulty: 'Medium',
+    category: 'Dynamic Programming',
+    categorySlug: 'dynamic-programming',
+    description: `Given a string \`s\` and a dictionary of strings \`wordDict\`, return \`true\` if \`s\` can be segmented into a space-separated sequence of one or more dictionary words.
+
+Note that the same word in the dictionary may be reused multiple times in the segmentation.`,
+    examples: [
+      { input: 's = "leetcode", wordDict = ["leet","code"]', output: 'true', explanation: '"leetcode" can be segmented as "leet code".' },
+      { input: 's = "applepenapple", wordDict = ["apple","pen"]', output: 'true', explanation: '"applepenapple" can be segmented as "apple pen apple". Note that "apple" is reused.' },
+      { input: 's = "catsandog", wordDict = ["cats","dog","sand","and","cat"]', output: 'false' },
+    ],
+    constraints: ['1 <= s.length <= 300', '1 <= wordDict.length <= 1000', '1 <= wordDict[i].length <= 20', 's and wordDict[i] consist of only lowercase English letters.', 'All strings in wordDict are unique.'],
+    hints: [
+      'Use dynamic programming. Define dp[i] = true if s[0..i-1] can be segmented.',
+      'For each position i, check all positions j < i: if dp[j] is true and s[j..i] is in the dictionary, then dp[i] = true.',
+      'Put the dictionary words into a HashSet for O(1) lookup.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return true if s can be segmented into dictionary words.
+     */
+    public boolean wordBreak(String s, List<String> wordDict) {
+        // Your code here
+        return false;
+    }
+}`,
+    testCases: [
+      { input: 's = "leetcode", wordDict = ["leet","code"]', expectedOutput: 'true' },
+      { input: 's = "applepenapple", wordDict = ["apple","pen"]', expectedOutput: 'true' },
+      { input: 's = "catsandog", wordDict = ["cats","dog","sand","and","cat"]', expectedOutput: 'false' },
+      { input: 's = "a", wordDict = ["a"]', expectedOutput: 'true' },
+    ],
+  },
+  {
+    slug: 'unique-paths',
+    title: 'Unique Paths',
+    difficulty: 'Medium',
+    category: 'Dynamic Programming',
+    categorySlug: 'dynamic-programming',
+    description: `There is a robot on an \`m x n\` grid. The robot is initially located at the **top-left corner** (i.e., \`grid[0][0]\`). The robot tries to move to the **bottom-right corner** (i.e., \`grid[m-1][n-1]\`). The robot can only move either **down** or **right** at any point in time.
+
+Given the two integers \`m\` and \`n\`, return the number of possible unique paths that the robot can take to reach the bottom-right corner.`,
+    examples: [
+      { input: 'm = 3, n = 7', output: '28' },
+      { input: 'm = 3, n = 2', output: '3', explanation: 'From the top-left, there are 3 ways: Right→Down→Down, Down→Down→Right, Down→Right→Down.' },
+    ],
+    constraints: ['1 <= m, n <= 100'],
+    hints: [
+      'The number of unique paths to any cell is the sum of paths from the cell above and the cell to the left.',
+      'Define dp[i][j] = number of unique paths to reach cell (i, j). dp[i][j] = dp[i-1][j] + dp[i][j-1].',
+      'The first row and first column each have only 1 path (all right or all down). You can optimize to a 1D DP array.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return the number of unique paths from top-left to bottom-right.
+     */
+    public int uniquePaths(int m, int n) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'm = 3, n = 7', expectedOutput: '28' },
+      { input: 'm = 3, n = 2', expectedOutput: '3' },
+      { input: 'm = 1, n = 1', expectedOutput: '1' },
+      { input: 'm = 7, n = 3', expectedOutput: '28' },
+    ],
+  },
+  {
+    slug: 'decode-ways',
+    title: 'Decode Ways',
+    difficulty: 'Medium',
+    category: 'Dynamic Programming',
+    categorySlug: 'dynamic-programming',
+    description: `A message containing letters from \`A-Z\` can be encoded into numbers using the mapping: 'A' → "1", 'B' → "2", …, 'Z' → "26".
+
+Given a string \`s\` containing only digits, return the **number of ways** to decode it. The test cases are generated so that the answer fits in a 32-bit integer.
+
+Note that groupings like "06" are not valid (leading zeros are not allowed).`,
+    examples: [
+      { input: 's = "12"', output: '2', explanation: '"12" can be decoded as "AB" (1 2) or "L" (12).' },
+      { input: 's = "226"', output: '3', explanation: '"226" can be decoded as "BZ" (2 26), "VF" (22 6), or "BBF" (2 2 6).' },
+      { input: 's = "06"', output: '0', explanation: '"06" cannot be decoded because "0" has no mapping and leading zero is invalid.' },
+    ],
+    constraints: ['1 <= s.length <= 100', 's contains only digits and may contain leading zeros.'],
+    hints: [
+      'Use DP where dp[i] represents the number of ways to decode the first i characters.',
+      'At each position, check if the single digit (s[i-1]) and the two-digit number (s[i-2..i-1]) form valid decodings.',
+      'A single digit is valid if it is 1-9. A two-digit number is valid if it is 10-26.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return the number of ways to decode the digit string.
+     */
+    public int numDecodings(String s) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 's = "12"', expectedOutput: '2' },
+      { input: 's = "226"', expectedOutput: '3' },
+      { input: 's = "06"', expectedOutput: '0' },
+      { input: 's = "10"', expectedOutput: '1' },
+    ],
+  },
+  {
+    slug: 'permutation-in-string',
+    title: 'Permutation in String',
+    difficulty: 'Medium',
+    category: 'Sliding Window',
+    categorySlug: 'sliding-window',
+    description: `Given two strings \`s1\` and \`s2\`, return \`true\` if \`s2\` contains a permutation of \`s1\`, or \`false\` otherwise.
+
+In other words, return \`true\` if one of \`s1\`'s permutations is a substring of \`s2\`.`,
+    examples: [
+      { input: 's1 = "ab", s2 = "eidbaooo"', output: 'true', explanation: 's2 contains "ba", which is a permutation of "ab".' },
+      { input: 's1 = "ab", s2 = "eidboaoo"', output: 'false', explanation: 'No permutation of "ab" exists as a contiguous substring of s2.' },
+    ],
+    constraints: ['1 <= s1.length, s2.length <= 10^4', 's1 and s2 consist of lowercase English letters.'],
+    hints: [
+      'A permutation of s1 in s2 means a window of length s1.length in s2 has the exact same character frequencies as s1.',
+      'Use a sliding window of size s1.length over s2 and compare character frequency maps.',
+      'Instead of rebuilding the frequency map each time, add the new character entering the window and remove the one leaving.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return true if s2 contains a permutation of s1.
+     */
+    public boolean checkInclusion(String s1, String s2) {
+        // Your code here
+        return false;
+    }
+}`,
+    testCases: [
+      { input: 's1 = "ab", s2 = "eidbaooo"', expectedOutput: 'true' },
+      { input: 's1 = "ab", s2 = "eidboaoo"', expectedOutput: 'false' },
+      { input: 's1 = "a", s2 = "a"', expectedOutput: 'true' },
+      { input: 's1 = "abc", s2 = "bbbca"', expectedOutput: 'true' },
+    ],
+  },
+  {
+    slug: 'max-consecutive-ones-iii',
+    title: 'Max Consecutive Ones III',
+    difficulty: 'Medium',
+    category: 'Sliding Window',
+    categorySlug: 'sliding-window',
+    description: `Given a binary array \`nums\` and an integer \`k\`, return the maximum number of consecutive \`1\`'s in the array if you can flip at most \`k\` \`0\`'s.`,
+    examples: [
+      { input: 'nums = [1,1,1,0,0,0,1,1,1,1,0], k = 2', output: '6', explanation: 'Flip the 0s at indices 5 and 10. The longest subarray of 1s is [1,1,1,1,1,1] of length 6.' },
+      { input: 'nums = [0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1], k = 3', output: '10' },
+    ],
+    constraints: ['1 <= nums.length <= 10^5', 'nums[i] is either 0 or 1.', '0 <= k <= nums.length'],
+    hints: [
+      'Use a sliding window approach. Expand the right boundary and shrink the left boundary when the number of 0s in the window exceeds k.',
+      'Maintain a count of zeros in the current window. When zeros > k, move the left pointer right until zeros <= k.',
+      'Track the maximum window size seen during the process.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return max consecutive 1s after flipping at most k zeros.
+     */
+    public int longestOnes(int[] nums, int k) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'nums = [1,1,1,0,0,0,1,1,1,1,0], k = 2', expectedOutput: '6' },
+      { input: 'nums = [0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1], k = 3', expectedOutput: '10' },
+      { input: 'nums = [1,1,1], k = 0', expectedOutput: '3' },
+      { input: 'nums = [0,0,0], k = 0', expectedOutput: '0' },
+    ],
+  },
+  {
+    slug: 'subsets',
+    title: 'Subsets',
+    difficulty: 'Medium',
+    category: 'Backtracking',
+    categorySlug: 'backtracking',
+    description: `Given an integer array \`nums\` of **unique** elements, return all possible subsets (the power set).
+
+The solution set **must not** contain duplicate subsets. Return the subsets in any order.`,
+    examples: [
+      { input: 'nums = [1,2,3]', output: '[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]', explanation: 'All 2^3 = 8 subsets of [1,2,3].' },
+      { input: 'nums = [0]', output: '[[],[0]]' },
+    ],
+    constraints: ['1 <= nums.length <= 10', '-10 <= nums[i] <= 10', 'All elements of nums are unique.'],
+    hints: [
+      'For each element, you have two choices: include it or exclude it. This gives 2^n subsets.',
+      'Use backtracking: at each index, choose to include the current element and recurse, then exclude it and recurse.',
+      'Alternatively, iterate from 0 to 2^n - 1 and use each number\'s binary representation to decide which elements to include.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return all possible subsets of the array.
+     */
+    public List<List<Integer>> subsets(int[] nums) {
+        // Your code here
+        return new ArrayList<>();
+    }
+}`,
+    testCases: [
+      { input: 'nums = [1,2,3]', expectedOutput: '[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]' },
+      { input: 'nums = [0]', expectedOutput: '[[],[0]]' },
+      { input: 'nums = [1,2]', expectedOutput: '[[],[1],[2],[1,2]]' },
+    ],
+  },
+  {
+    slug: 'permutations',
+    title: 'Permutations',
+    difficulty: 'Medium',
+    category: 'Backtracking',
+    categorySlug: 'backtracking',
+    description: `Given an array \`nums\` of distinct integers, return all the possible permutations. You can return the answer in **any order**.`,
+    examples: [
+      { input: 'nums = [1,2,3]', output: '[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]', explanation: 'All 3! = 6 permutations of [1,2,3].' },
+      { input: 'nums = [0,1]', output: '[[0,1],[1,0]]' },
+      { input: 'nums = [1]', output: '[[1]]' },
+    ],
+    constraints: ['1 <= nums.length <= 6', '-10 <= nums[i] <= 10', 'All integers of nums are unique.'],
+    hints: [
+      'Use backtracking. At each step, choose an unused element to add to the current permutation.',
+      'Use a boolean visited array (or swap elements in place) to track which elements have been used.',
+      'The base case is when the current permutation has the same length as nums — add a copy to the result.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return all possible permutations of the array.
+     */
+    public List<List<Integer>> permute(int[] nums) {
+        // Your code here
+        return new ArrayList<>();
+    }
+}`,
+    testCases: [
+      { input: 'nums = [1,2,3]', expectedOutput: '[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]' },
+      { input: 'nums = [0,1]', expectedOutput: '[[0,1],[1,0]]' },
+      { input: 'nums = [1]', expectedOutput: '[[1]]' },
+    ],
+  },
+  {
+    slug: 'combination-sum',
+    title: 'Combination Sum',
+    difficulty: 'Medium',
+    category: 'Backtracking',
+    categorySlug: 'backtracking',
+    description: `Given an array of **distinct** integers \`candidates\` and a target integer \`target\`, return a list of all **unique combinations** of \`candidates\` where the chosen numbers sum to \`target\`. You may return the combinations in any order.
+
+The **same** number may be chosen from \`candidates\` an **unlimited number of times**. Two combinations are unique if the frequency of at least one of the chosen numbers is different.`,
+    examples: [
+      { input: 'candidates = [2,3,6,7], target = 7', output: '[[2,2,3],[7]]', explanation: '2 + 2 + 3 = 7 and 7 = 7 are the only two combinations.' },
+      { input: 'candidates = [2,3,5], target = 8', output: '[[2,2,2,2],[2,3,3],[3,5]]' },
+      { input: 'candidates = [2], target = 1', output: '[]', explanation: 'No combination sums to 1.' },
+    ],
+    constraints: ['1 <= candidates.length <= 30', '2 <= candidates[i] <= 40', 'All elements of candidates are distinct.', '1 <= target <= 40'],
+    hints: [
+      'Use backtracking. At each step, decide how many times to use the current candidate before moving to the next.',
+      'To avoid duplicates, always iterate forward (never pick a candidate before the current index).',
+      'Prune the search: if the remaining target becomes negative, stop exploring that branch.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return all unique combinations that sum to target.
+     */
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        // Your code here
+        return new ArrayList<>();
+    }
+}`,
+    testCases: [
+      { input: 'candidates = [2,3,6,7], target = 7', expectedOutput: '[[2,2,3],[7]]' },
+      { input: 'candidates = [2,3,5], target = 8', expectedOutput: '[[2,2,2,2],[2,3,3],[3,5]]' },
+      { input: 'candidates = [2], target = 1', expectedOutput: '[]' },
+      { input: 'candidates = [1], target = 3', expectedOutput: '[[1,1,1]]' },
+    ],
+  },
+  {
+    slug: 'search-rotated-sorted-array',
+    title: 'Search in Rotated Sorted Array',
+    difficulty: 'Medium',
+    category: 'Arrays & Strings',
+    categorySlug: 'arrays-and-strings',
+    description: `There is an integer array \`nums\` sorted in ascending order (with **distinct** values). Prior to being passed to your function, \`nums\` is **rotated** at an unknown pivot index \`k\` such that the resulting array is \`[nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]\`.
+
+Given the rotated array \`nums\` and an integer \`target\`, return the index of \`target\` if it is in \`nums\`, or \`-1\` if it is not.
+
+You must write an algorithm with \`O(log n)\` runtime complexity.`,
+    examples: [
+      { input: 'nums = [4,5,6,7,0,1,2], target = 0', output: '4' },
+      { input: 'nums = [4,5,6,7,0,1,2], target = 3', output: '-1' },
+      { input: 'nums = [1], target = 0', output: '-1' },
+    ],
+    constraints: ['1 <= nums.length <= 5000', '-10^4 <= nums[i] <= 10^4', 'All values of nums are unique.', 'nums is a rotated sorted array.', '-10^4 <= target <= 10^4'],
+    hints: [
+      'Use binary search. At each step, one half of the array is always sorted.',
+      'Determine which half is sorted by comparing nums[mid] with nums[left]. Then check if the target falls in the sorted half.',
+      'If the target is in the sorted half, narrow the search to that half. Otherwise, search the other half.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Search for target in a rotated sorted array.
+     */
+    public int search(int[] nums, int target) {
+        // Your code here
+        return -1;
+    }
+}`,
+    testCases: [
+      { input: 'nums = [4,5,6,7,0,1,2], target = 0', expectedOutput: '4' },
+      { input: 'nums = [4,5,6,7,0,1,2], target = 3', expectedOutput: '-1' },
+      { input: 'nums = [1], target = 0', expectedOutput: '-1' },
+      { input: 'nums = [3,1], target = 1', expectedOutput: '1' },
+    ],
+  },
+  {
+    slug: 'find-minimum-rotated-sorted-array',
+    title: 'Find Minimum in Rotated Sorted Array',
+    difficulty: 'Medium',
+    category: 'Arrays & Strings',
+    categorySlug: 'arrays-and-strings',
+    description: `Suppose an array of length \`n\` sorted in ascending order is **rotated** between \`1\` and \`n\` times. For example, the array \`[0,1,2,4,5,6,7]\` might become \`[4,5,6,7,0,1,2]\`.
+
+Given the sorted rotated array \`nums\` of **unique** elements, return the minimum element of this array.
+
+You must write an algorithm that runs in \`O(log n)\` time.`,
+    examples: [
+      { input: 'nums = [3,4,5,1,2]', output: '1', explanation: 'The original sorted array [1,2,3,4,5] was rotated 3 times.' },
+      { input: 'nums = [4,5,6,7,0,1,2]', output: '0' },
+      { input: 'nums = [11,13,15,17]', output: '11', explanation: 'The array was not rotated (or rotated n times).' },
+    ],
+    constraints: ['n == nums.length', '1 <= n <= 5000', '-5000 <= nums[i] <= 5000', 'All integers of nums are unique.', 'nums is sorted and rotated between 1 and n times.'],
+    hints: [
+      'Use binary search. The minimum element is the only element smaller than its predecessor.',
+      'Compare nums[mid] with nums[right]. If nums[mid] > nums[right], the minimum is in the right half.',
+      'If nums[mid] <= nums[right], the minimum is in the left half (including mid).',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Find the minimum element in a rotated sorted array.
+     */
+    public int findMin(int[] nums) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'nums = [3,4,5,1,2]', expectedOutput: '1' },
+      { input: 'nums = [4,5,6,7,0,1,2]', expectedOutput: '0' },
+      { input: 'nums = [11,13,15,17]', expectedOutput: '11' },
+      { input: 'nums = [2,1]', expectedOutput: '1' },
+    ],
+  },
+  {
+    slug: 'single-number',
+    title: 'Single Number',
+    difficulty: 'Easy',
+    category: 'Arrays & Strings',
+    categorySlug: 'arrays-and-strings',
+    description: `Given a **non-empty** array of integers \`nums\`, every element appears **twice** except for one. Find that single one.
+
+You must implement a solution with a linear runtime complexity and use only constant extra space.`,
+    examples: [
+      { input: 'nums = [2,2,1]', output: '1' },
+      { input: 'nums = [4,1,2,1,2]', output: '4', explanation: '4 appears only once while all other numbers appear twice.' },
+      { input: 'nums = [1]', output: '1' },
+    ],
+    constraints: ['1 <= nums.length <= 3 * 10^4', '-3 * 10^4 <= nums[i] <= 3 * 10^4', 'Each element appears exactly twice except for one element which appears exactly once.'],
+    hints: [
+      'Think about a bitwise operation that cancels out pairs of identical numbers.',
+      'XOR has the property: a ^ a = 0 and a ^ 0 = a.',
+      'XOR all elements together. Pairs cancel out, leaving only the single number.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Find the element that appears only once.
+     */
+    public int singleNumber(int[] nums) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'nums = [2,2,1]', expectedOutput: '1' },
+      { input: 'nums = [4,1,2,1,2]', expectedOutput: '4' },
+      { input: 'nums = [1]', expectedOutput: '1' },
+      { input: 'nums = [-1,1,1]', expectedOutput: '-1' },
+    ],
+  },
+  {
+    slug: 'time-based-key-value-store',
+    title: 'Time Based Key-Value Store',
+    difficulty: 'Medium',
+    category: 'Arrays & Strings',
+    categorySlug: 'arrays-and-strings',
+    description: `Design a time-based key-value data structure that can store multiple values for the same key at different timestamps and retrieve the key's value at a certain timestamp.
+
+Implement the \`TimeMap\` class:
+- \`TimeMap()\` — Initializes the object.
+- \`void set(String key, String value, int timestamp)\` — Stores the key \`key\` with the value \`value\` at the given time \`timestamp\`.
+- \`String get(String key, int timestamp)\` — Returns the value associated with \`key\` where the stored timestamp is the **largest timestamp less than or equal to** the given \`timestamp\`. If there are no applicable values, return \`""\`.`,
+    examples: [
+      { input: '["set","set","get","get"]\n[["foo","bar",1],["foo","bar2",4],["foo",1],["foo",3]]', output: '["bar","bar"]', explanation: 'get("foo", 1) returns "bar". get("foo", 3) returns "bar" since the largest timestamp <= 3 is 1.' },
+      { input: '["set","get","get"]\n[["foo","bar",1],["foo",1],["foo",2]]', output: '["bar","bar"]', explanation: 'get("foo", 1) returns "bar". get("foo", 2) also returns "bar" because timestamp 1 <= 2.' },
+    ],
+    constraints: ['1 <= key.length, value.length <= 100', 'key and value consist of lowercase English letters and digits.', '1 <= timestamp <= 10^7', 'All timestamps of set are strictly increasing for a given key.', 'At most 2 * 10^5 calls to set and get.'],
+    hints: [
+      'For each key, store a list of (timestamp, value) pairs. Since timestamps are strictly increasing, the list is already sorted.',
+      'For the get operation, use binary search on the list of timestamps to find the largest one <= the given timestamp.',
+      'In Java, you can use TreeMap or a custom binary search on an ArrayList.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Implement a time-based key-value store.
+     */
+    private Map<String, List<int[]>> map;
+    private Map<String, List<String>> valMap;
+
+    public Solution() {
+        // Your code here
+    }
+
+    public void set(String key, String value, int timestamp) {
+        // Your code here
+    }
+
+    public String get(String key, int timestamp) {
+        // Your code here
+        return "";
+    }
+}`,
+    testCases: [
+      { input: '["set","set","get","get"]\n[["foo","bar",1],["foo","bar2",4],["foo",1],["foo",3]]', expectedOutput: '["bar","bar"]' },
+      { input: '["set","get","get"]\n[["foo","bar",1],["foo",1],["foo",2]]', expectedOutput: '["bar","bar"]' },
+      { input: '["set","set","get"]\n[["a","v1",1],["a","v2",2],["a",3]]', expectedOutput: '["v2"]' },
     ],
   },
 ];
