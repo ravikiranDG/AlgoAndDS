@@ -1,6 +1,7 @@
-// Code execution provider abstraction
-// Configure via NEXT_PUBLIC_PISTON_URL env variable, or falls back to local-only mode
-const PISTON_URL = process.env.NEXT_PUBLIC_PISTON_URL || "";
+// Code execution via Judge0 CE (free, no API key required)
+// Override with NEXT_PUBLIC_JUDGE0_URL env variable for self-hosted instances
+const JUDGE0_URL = process.env.NEXT_PUBLIC_JUDGE0_URL || "https://ce.judge0.com";
+const JAVA_LANGUAGE_ID = 62; // Java (OpenJDK 13.0.1)
 
 export interface ExecutionResult {
   success: boolean;
@@ -246,41 +247,52 @@ export function parseExecutionOutput(stdout: string, stderr: string, exitCode: n
 export async function executeCode(
   javaSource: string
 ): Promise<{ stdout: string; stderr: string; exitCode: number }> {
-  if (!PISTON_URL) {
-    throw new Error("NO_ENDPOINT");
-  }
+  const b64encode = (s: string) => Buffer.from(s).toString("base64");
+  const b64decode = (s: string) => s ? Buffer.from(s, "base64").toString("utf-8") : "";
 
-  const response = await fetch(PISTON_URL, {
+  // Submit to Judge0 CE
+  const submitUrl = `${JUDGE0_URL}/submissions?base64_encoded=true&wait=true`;
+
+  const response = await fetch(submitUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      language: "java",
-      version: "15.0.2",
-      files: [{ name: "Main.java", content: javaSource }],
-      compile_timeout: 10000,
-      run_timeout: 10000,
-      compile_memory_limit: -1,
-      run_memory_limit: -1,
+      source_code: b64encode(javaSource),
+      language_id: JAVA_LANGUAGE_ID,
+      stdin: "",
+      cpu_time_limit: 10,
+      wall_time_limit: 15,
+      memory_limit: 256000,
     }),
   });
 
   if (!response.ok) {
-    throw new Error(`Execution service error: ${response.status}`);
+    const text = await response.text().catch(() => "");
+    throw new Error(`Execution service error: ${response.status} ${text}`);
   }
 
   const data = await response.json();
 
-  if (data.compile && data.compile.code !== 0) {
-    return {
-      stdout: "",
-      stderr: data.compile.stderr || data.compile.output || "Compilation failed",
-      exitCode: data.compile.code,
-    };
+  // Status IDs: 3=Accepted, 5=TLE, 6=CompilationError, 7-12=Runtime errors
+  const statusId = data.status?.id || 0;
+  const stdout = b64decode(data.stdout || "");
+  const stderr = b64decode(data.stderr || "");
+  const compileOutput = b64decode(data.compile_output || "");
+
+  // Compilation error
+  if (statusId === 6) {
+    return { stdout: "", stderr: compileOutput || "Compilation failed", exitCode: 1 };
   }
 
-  return {
-    stdout: data.run?.stdout || "",
-    stderr: data.run?.stderr || "",
-    exitCode: data.run?.code || 0,
-  };
+  // Time limit exceeded
+  if (statusId === 5) {
+    return { stdout, stderr: "Time Limit Exceeded — your solution may have an infinite loop or is too slow.", exitCode: 124 };
+  }
+
+  // Runtime errors (statusId 7-12)
+  if (statusId > 6) {
+    return { stdout, stderr: stderr || compileOutput || data.status?.description || "Runtime error", exitCode: 1 };
+  }
+
+  return { stdout, stderr, exitCode: statusId === 3 ? 0 : 1 };
 }
