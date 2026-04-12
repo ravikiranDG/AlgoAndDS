@@ -1,5 +1,5 @@
 // ============================================================================
-// problems.ts - 73 DS&A Interview Problems (Problem Definitions Only)
+// problems.ts - 99 DS&A Interview Problems (Problem Definitions Only)
 // ============================================================================
 
 export interface Example {
@@ -2979,6 +2979,1008 @@ public class Solution {
       { input: '["set","set","get","get"]\n[["foo","bar",1],["foo","bar2",4],["foo",1],["foo",3]]', expectedOutput: '["bar","bar"]' },
       { input: '["set","get","get"]\n[["foo","bar",1],["foo",1],["foo",2]]', expectedOutput: '["bar","bar"]' },
       { input: '["set","set","get"]\n[["a","v1",1],["a","v2",2],["a",3]]', expectedOutput: '["v2"]' },
+    ],
+  },
+
+  // =====================================================================
+  // Bit Manipulation (4 problems)
+  // =====================================================================
+  {
+    slug: 'number-of-1-bits',
+    title: 'Number of 1 Bits',
+    difficulty: 'Easy',
+    category: 'Bit Manipulation',
+    categorySlug: 'bit-manipulation',
+    description: `Write a function that takes the binary representation of a positive integer and returns the number of set bits (1 bits) it has. This is also known as the **Hamming weight**.
+
+For example, the integer 11 has binary representation \`1011\`, so the function should return 3.
+
+This is a fundamental bit manipulation technique used in many areas including error detection, cryptography, and optimization problems.`,
+    examples: [
+      { input: 'n = 11', output: '3', explanation: 'The binary representation of 11 is 1011, which has three 1 bits.' },
+      { input: 'n = 128', output: '1', explanation: 'The binary representation of 128 is 10000000, which has one 1 bit.' },
+      { input: 'n = 2147483645', output: '30', explanation: 'The binary representation has 30 set bits.' },
+    ],
+    constraints: ['1 <= n <= 2^31 - 1'],
+    hints: [
+      'You can check the last bit using n & 1, then shift right.',
+      'Think about what n & (n - 1) does — it removes the lowest set bit.',
+      'Use the Brian Kernighan trick: repeatedly do n = n & (n - 1) and count iterations until n becomes 0.',
+    ],
+    starterCode: `public class Solution {
+    /**
+     * Return the number of 1 bits in the binary representation of n.
+     */
+    public int hammingWeight(int n) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'n = 11', expectedOutput: '3' },
+      { input: 'n = 128', expectedOutput: '1' },
+      { input: 'n = 2147483645', expectedOutput: '30' },
+      { input: 'n = 1', expectedOutput: '1' },
+    ],
+  },
+  {
+    slug: 'counting-bits',
+    title: 'Counting Bits',
+    difficulty: 'Easy',
+    category: 'Bit Manipulation',
+    categorySlug: 'bit-manipulation',
+    description: `Given an integer \`n\`, return an array \`ans\` of length \`n + 1\` such that for each \`i\` (0 <= i <= n), \`ans[i]\` is the **number of 1 bits** in the binary representation of \`i\`.
+
+Try to solve it in O(n) time using dynamic programming on bit patterns rather than counting bits individually for each number.
+
+This problem combines bit manipulation with dynamic programming for an elegant solution.`,
+    examples: [
+      { input: 'n = 2', output: '[0,1,1]', explanation: '0 -> 0 (zero 1s), 1 -> 1 (one 1), 2 -> 10 (one 1).' },
+      { input: 'n = 5', output: '[0,1,1,2,1,2]', explanation: '0->0, 1->1, 2->1, 3->2, 4->1, 5->2.' },
+    ],
+    constraints: ['0 <= n <= 10^5'],
+    hints: [
+      'You could count bits for each number independently, but can you reuse previous results?',
+      'Observe that the number of 1 bits of i is related to i >> 1 (right shift by 1).',
+      'Use the recurrence: ans[i] = ans[i >> 1] + (i & 1). The right shift removes the last bit, and (i & 1) tells you if the last bit was 1.',
+    ],
+    starterCode: `public class Solution {
+    /**
+     * Return an array where ans[i] is the number of 1 bits in i,
+     * for each i from 0 to n.
+     */
+    public int[] countBits(int n) {
+        // Your code here
+        return new int[]{};
+    }
+}`,
+    testCases: [
+      { input: 'n = 2', expectedOutput: '[0,1,1]' },
+      { input: 'n = 5', expectedOutput: '[0,1,1,2,1,2]' },
+      { input: 'n = 0', expectedOutput: '[0]' },
+      { input: 'n = 8', expectedOutput: '[0,1,1,2,1,2,2,3,1]' },
+    ],
+  },
+  {
+    slug: 'reverse-bits',
+    title: 'Reverse Bits',
+    difficulty: 'Easy',
+    category: 'Bit Manipulation',
+    categorySlug: 'bit-manipulation',
+    description: `Reverse the bits of a given 32-bit unsigned integer.
+
+For example, the input integer \`43261596\` has binary representation \`00000010100101000001111010011100\`. Reversing the bits gives \`00111001011110000010100101000000\`, which is \`964176192\`.
+
+Note that the integer is treated as an unsigned 32-bit value, so all 32 bits must be reversed including leading zeros.`,
+    examples: [
+      { input: 'n = 43261596', output: '964176192', explanation: 'Binary: 00000010100101000001111010011100 reversed is 00111001011110000010100101000000 = 964176192.' },
+      { input: 'n = 4294967293', output: '3221225471', explanation: 'Binary: 11111111111111111111111111111101 reversed is 10111111111111111111111111111111 = 3221225471.' },
+    ],
+    constraints: ['The input is a 32-bit unsigned integer.'],
+    hints: [
+      'Process one bit at a time — extract the last bit, place it in the reversed position.',
+      'Shift the result left by 1 each step, and OR in the last bit of n, then shift n right.',
+      'Loop 32 times: result = (result << 1) | (n & 1), then n >>= 1. Use unsigned shift (>>>) in Java.',
+    ],
+    starterCode: `public class Solution {
+    /**
+     * Reverse the bits of a 32-bit unsigned integer.
+     */
+    public long reverseBits(long n) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'n = 43261596', expectedOutput: '964176192' },
+      { input: 'n = 4294967293', expectedOutput: '3221225471' },
+      { input: 'n = 0', expectedOutput: '0' },
+    ],
+  },
+  {
+    slug: 'missing-number',
+    title: 'Missing Number',
+    difficulty: 'Easy',
+    category: 'Bit Manipulation',
+    categorySlug: 'bit-manipulation',
+    description: `Given an array \`nums\` containing \`n\` distinct numbers in the range \`[0, n]\`, return the only number in the range that is missing from the array.
+
+For example, if \`nums = [3, 0, 1]\`, the range is [0, 3] and the missing number is 2.
+
+Can you implement a solution using O(1) extra space and O(n) runtime? Think about XOR properties or the sum formula.`,
+    examples: [
+      { input: 'nums = [3,0,1]', output: '2', explanation: 'n = 3 since there are 3 numbers, so all numbers are in [0,3]. 2 is missing.' },
+      { input: 'nums = [0,1]', output: '2', explanation: 'n = 2, range is [0,2]. 2 is missing.' },
+      { input: 'nums = [9,6,4,2,3,5,7,0,1]', output: '8', explanation: 'n = 9, range is [0,9]. 8 is missing.' },
+    ],
+    constraints: ['n == nums.length', '1 <= n <= 10^4', '0 <= nums[i] <= n', 'All the numbers of nums are unique.'],
+    hints: [
+      'One approach: use the sum formula n*(n+1)/2 and subtract the array sum.',
+      'Another approach: XOR all numbers from 0 to n, then XOR all elements of the array. The result is the missing number.',
+      'XOR works because a ^ a = 0 and a ^ 0 = a, so all paired numbers cancel out leaving only the missing one.',
+    ],
+    starterCode: `public class Solution {
+    /**
+     * Find the missing number in the range [0, n].
+     */
+    public int missingNumber(int[] nums) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'nums = [3,0,1]', expectedOutput: '2' },
+      { input: 'nums = [0,1]', expectedOutput: '2' },
+      { input: 'nums = [9,6,4,2,3,5,7,0,1]', expectedOutput: '8' },
+      { input: 'nums = [0]', expectedOutput: '1' },
+    ],
+  },
+
+  // =====================================================================
+  // Math & Number Theory (3 problems)
+  // =====================================================================
+  {
+    slug: 'power-of-two',
+    title: 'Power of Two',
+    difficulty: 'Easy',
+    category: 'Math & Number Theory',
+    categorySlug: 'math-and-number-theory',
+    description: `Given an integer \`n\`, return \`true\` if it is a power of two, otherwise return \`false\`.
+
+An integer \`n\` is a power of two if there exists an integer \`x\` such that \`n == 2^x\`.
+
+Think about the binary representation of powers of two — they have a special property that makes this problem solvable in O(1) time.`,
+    examples: [
+      { input: 'n = 1', output: 'true', explanation: '2^0 = 1.' },
+      { input: 'n = 16', output: 'true', explanation: '2^4 = 16.' },
+      { input: 'n = 3', output: 'false', explanation: '3 is not a power of two.' },
+    ],
+    constraints: ['-2^31 <= n <= 2^31 - 1'],
+    hints: [
+      'Powers of two in binary have exactly one set bit: 1, 10, 100, 1000, ...',
+      'What does n & (n - 1) do for a power of two?',
+      'A number n is a power of two if n > 0 and n & (n - 1) == 0.',
+    ],
+    starterCode: `public class Solution {
+    /**
+     * Return true if n is a power of two.
+     */
+    public boolean isPowerOfTwo(int n) {
+        // Your code here
+        return false;
+    }
+}`,
+    testCases: [
+      { input: 'n = 1', expectedOutput: 'true' },
+      { input: 'n = 16', expectedOutput: 'true' },
+      { input: 'n = 3', expectedOutput: 'false' },
+      { input: 'n = 0', expectedOutput: 'false' },
+    ],
+  },
+  {
+    slug: 'count-primes',
+    title: 'Count Primes',
+    difficulty: 'Medium',
+    category: 'Math & Number Theory',
+    categorySlug: 'math-and-number-theory',
+    description: `Given an integer \`n\`, return the number of prime numbers that are **strictly less than** \`n\`.
+
+A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself.
+
+The naive approach of checking each number individually is too slow for large inputs. Consider using the **Sieve of Eratosthenes** algorithm, which efficiently marks composite numbers.`,
+    examples: [
+      { input: 'n = 10', output: '4', explanation: 'There are 4 primes less than 10: 2, 3, 5, 7.' },
+      { input: 'n = 0', output: '0', explanation: 'There are no primes less than 0.' },
+      { input: 'n = 1', output: '0', explanation: 'There are no primes less than 1.' },
+    ],
+    constraints: ['0 <= n <= 5 * 10^6'],
+    hints: [
+      'The brute force approach checks each number for primality — this is O(n * sqrt(n)). Can you do better?',
+      'The Sieve of Eratosthenes marks multiples of each prime as composite. Start with 2 and mark all its multiples.',
+      'Create a boolean array of size n. For each prime p, mark p*p, p*p+p, p*p+2p, ... as not prime. Count remaining true entries.',
+    ],
+    starterCode: `public class Solution {
+    /**
+     * Count the number of primes strictly less than n.
+     */
+    public int countPrimes(int n) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'n = 10', expectedOutput: '4' },
+      { input: 'n = 0', expectedOutput: '0' },
+      { input: 'n = 1', expectedOutput: '0' },
+      { input: 'n = 20', expectedOutput: '8' },
+    ],
+  },
+  {
+    slug: 'happy-number',
+    title: 'Happy Number',
+    difficulty: 'Easy',
+    category: 'Math & Number Theory',
+    categorySlug: 'math-and-number-theory',
+    description: `Write an algorithm to determine if a number \`n\` is a **happy number**.
+
+A happy number is defined by the following process: starting with any positive integer, replace the number by the sum of the squares of its digits. Repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Numbers for which this process ends in 1 are happy.
+
+For example, 19 → 1² + 9² = 82 → 8² + 2² = 68 → 6² + 8² = 100 → 1² + 0² + 0² = 1. So 19 is happy!`,
+    examples: [
+      { input: 'n = 19', output: 'true', explanation: '19 → 82 → 68 → 100 → 1. The process reaches 1, so 19 is happy.' },
+      { input: 'n = 2', output: 'false', explanation: '2 → 4 → 16 → 37 → 58 → 89 → 145 → 42 → 20 → 4 (cycle). Never reaches 1.' },
+    ],
+    constraints: ['1 <= n <= 2^31 - 1'],
+    hints: [
+      'Use a HashSet to detect cycles — if you see a number you have seen before, it is not happy.',
+      'Alternatively, use Floyd\'s cycle detection (slow/fast pointer) on the sequence of digit-square sums.',
+      'To extract digits, repeatedly take n % 10 and n / 10.',
+    ],
+    starterCode: `public class Solution {
+    /**
+     * Return true if n is a happy number.
+     */
+    public boolean isHappy(int n) {
+        // Your code here
+        return false;
+    }
+}`,
+    testCases: [
+      { input: 'n = 19', expectedOutput: 'true' },
+      { input: 'n = 2', expectedOutput: 'false' },
+      { input: 'n = 1', expectedOutput: 'true' },
+      { input: 'n = 7', expectedOutput: 'true' },
+    ],
+  },
+
+  // =====================================================================
+  // HashMaps — fill gaps (3 problems)
+  // =====================================================================
+  {
+    slug: 'valid-anagram',
+    title: 'Valid Anagram',
+    difficulty: 'Easy',
+    category: 'HashMaps',
+    categorySlug: 'hashmaps',
+    description: `Given two strings \`s\` and \`t\`, return \`true\` if \`t\` is an anagram of \`s\`, and \`false\` otherwise.
+
+An anagram is a word or phrase formed by rearranging the letters of a different word or phrase, using all the original letters exactly once.
+
+For example, "anagram" is an anagram of "nagaram", but "rat" is not an anagram of "car".`,
+    examples: [
+      { input: 's = "anagram", t = "nagaram"', output: 'true', explanation: 'Both strings contain the same characters with the same frequencies.' },
+      { input: 's = "rat", t = "car"', output: 'false', explanation: '"rat" and "car" do not have the same character frequencies.' },
+    ],
+    constraints: ['1 <= s.length, t.length <= 5 * 10^4', 's and t consist of lowercase English letters.'],
+    hints: [
+      'If the lengths differ, they cannot be anagrams.',
+      'Count character frequencies using a HashMap or an array of size 26.',
+      'Increment counts for characters in s, decrement for characters in t, then check all counts are zero.',
+    ],
+    starterCode: `public class Solution {
+    /**
+     * Return true if t is an anagram of s.
+     */
+    public boolean isAnagram(String s, String t) {
+        // Your code here
+        return false;
+    }
+}`,
+    testCases: [
+      { input: 's = "anagram", t = "nagaram"', expectedOutput: 'true' },
+      { input: 's = "rat", t = "car"', expectedOutput: 'false' },
+      { input: 's = "a", t = "a"', expectedOutput: 'true' },
+      { input: 's = "ab", t = "a"', expectedOutput: 'false' },
+    ],
+  },
+  {
+    slug: 'intersection-of-two-arrays',
+    title: 'Intersection of Two Arrays',
+    difficulty: 'Easy',
+    category: 'HashMaps',
+    categorySlug: 'hashmaps',
+    description: `Given two integer arrays \`nums1\` and \`nums2\`, return an array of their **intersection**. Each element in the result must be **unique**, and you may return the result in any order.
+
+The intersection of two arrays is the set of elements that appear in both arrays.
+
+For example, the intersection of [1,2,2,1] and [2,2] is [2].`,
+    examples: [
+      { input: 'nums1 = [1,2,2,1], nums2 = [2,2]', output: '[2]', explanation: '2 is the only element present in both arrays.' },
+      { input: 'nums1 = [4,9,5], nums2 = [9,4,9,8,4]', output: '[4,9]', explanation: 'Both 4 and 9 appear in both arrays. Order does not matter.' },
+    ],
+    constraints: ['1 <= nums1.length, nums2.length <= 1000', '0 <= nums1[i], nums2[i] <= 1000'],
+    hints: [
+      'Use a HashSet to store elements from one array, then check which elements of the other array are in the set.',
+      'Sets automatically handle duplicates, ensuring unique results.',
+      'Add all elements of nums1 to a set. Iterate nums2 and add to result if the element is in the set. Use another set for the result to avoid duplicates.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return the intersection of two arrays (unique elements only).
+     */
+    public int[] intersection(int[] nums1, int[] nums2) {
+        // Your code here
+        return new int[]{};
+    }
+}`,
+    testCases: [
+      { input: 'nums1 = [1,2,2,1], nums2 = [2,2]', expectedOutput: '[2]' },
+      { input: 'nums1 = [4,9,5], nums2 = [9,4,9,8,4]', expectedOutput: '[4,9]' },
+      { input: 'nums1 = [1,2,3], nums2 = [4,5,6]', expectedOutput: '[]' },
+    ],
+  },
+  {
+    slug: 'isomorphic-strings',
+    title: 'Isomorphic Strings',
+    difficulty: 'Easy',
+    category: 'HashMaps',
+    categorySlug: 'hashmaps',
+    description: `Given two strings \`s\` and \`t\`, determine if they are **isomorphic**. Two strings are isomorphic if the characters in \`s\` can be replaced to get \`t\`, where each character maps to exactly one other character and no two characters map to the same character.
+
+The mapping must be a one-to-one correspondence. All occurrences of a character must be replaced with another character while preserving the order.
+
+For example, "egg" and "add" are isomorphic (e→a, g→d), but "foo" and "bar" are not (o maps to both a and r).`,
+    examples: [
+      { input: 's = "egg", t = "add"', output: 'true', explanation: 'e maps to a, g maps to d. The mapping is consistent.' },
+      { input: 's = "foo", t = "bar"', output: 'false', explanation: 'o cannot map to both a and r.' },
+      { input: 's = "paper", t = "title"', output: 'true', explanation: 'p→t, a→i, e→l, r→e. Each character has a unique mapping.' },
+    ],
+    constraints: ['1 <= s.length <= 5 * 10^4', 't.length == s.length', 's and t consist of any valid ASCII character.'],
+    hints: [
+      'You need two maps: one from s→t and one from t→s to ensure the mapping is bijective.',
+      'Iterate through both strings simultaneously and check consistency of mappings.',
+      'If s[i] is already mapped to a different character than t[i], or t[i] is already mapped from a different character than s[i], return false.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return true if s and t are isomorphic.
+     */
+    public boolean isIsomorphic(String s, String t) {
+        // Your code here
+        return false;
+    }
+}`,
+    testCases: [
+      { input: 's = "egg", t = "add"', expectedOutput: 'true' },
+      { input: 's = "foo", t = "bar"', expectedOutput: 'false' },
+      { input: 's = "paper", t = "title"', expectedOutput: 'true' },
+      { input: 's = "badc", t = "baba"', expectedOutput: 'false' },
+    ],
+  },
+
+  // =====================================================================
+  // Trees — fill Easy gaps (2 problems)
+  // =====================================================================
+  {
+    slug: 'maximum-depth-binary-tree',
+    title: 'Maximum Depth of Binary Tree',
+    difficulty: 'Easy',
+    category: 'Trees',
+    categorySlug: 'trees',
+    description: `Given the \`root\` of a binary tree, return its **maximum depth**.
+
+A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+This is one of the most fundamental tree problems and a great introduction to recursive thinking on tree structures.`,
+    examples: [
+      { input: 'root = [3,9,20,null,null,15,7]', output: '3', explanation: 'The tree has depth 3: root(3) → right(20) → left(15) or right(7).' },
+      { input: 'root = [1,null,2]', output: '2', explanation: 'The tree has depth 2: root(1) → right(2).' },
+    ],
+    constraints: ['The number of nodes is in the range [0, 10^4].', '-100 <= Node.val <= 100'],
+    hints: [
+      'Think recursively: the depth of a tree is 1 + the maximum depth of its subtrees.',
+      'Base case: if the node is null, the depth is 0.',
+      'Return 1 + Math.max(maxDepth(root.left), maxDepth(root.right)).',
+    ],
+    starterCode: `public class Solution {
+    /**
+     * Definition for a binary tree node.
+     * public class TreeNode {
+     *     int val;
+     *     TreeNode left;
+     *     TreeNode right;
+     *     TreeNode(int val) { this.val = val; }
+     * }
+     */
+    public int maxDepth(TreeNode root) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'root = [3,9,20,null,null,15,7]', expectedOutput: '3' },
+      { input: 'root = [1,null,2]', expectedOutput: '2' },
+      { input: 'root = []', expectedOutput: '0' },
+    ],
+  },
+  {
+    slug: 'symmetric-tree',
+    title: 'Symmetric Tree',
+    difficulty: 'Easy',
+    category: 'Trees',
+    categorySlug: 'trees',
+    description: `Given the \`root\` of a binary tree, check whether it is a **mirror of itself** (i.e., symmetric around its center).
+
+A tree is symmetric if the left subtree is a mirror reflection of the right subtree. This means that for every node in the left subtree, there is a corresponding node in the right subtree at the mirrored position with the same value.
+
+Both recursive and iterative solutions are possible.`,
+    examples: [
+      { input: 'root = [1,2,2,3,4,4,3]', output: 'true', explanation: 'The tree is symmetric around its center.' },
+      { input: 'root = [1,2,2,null,3,null,3]', output: 'false', explanation: 'The right subtree is not a mirror of the left subtree.' },
+    ],
+    constraints: ['The number of nodes is in the range [1, 1000].', '-100 <= Node.val <= 100'],
+    hints: [
+      'Compare the left and right subtrees: left.left should mirror right.right, and left.right should mirror right.left.',
+      'Write a helper function isMirror(t1, t2) that checks two trees are mirrors of each other.',
+      'Base cases: both null → true, one null → false, values differ → false. Recurse on mirrored children.',
+    ],
+    starterCode: `public class Solution {
+    /**
+     * Definition for a binary tree node.
+     * public class TreeNode {
+     *     int val;
+     *     TreeNode left;
+     *     TreeNode right;
+     *     TreeNode(int val) { this.val = val; }
+     * }
+     */
+    public boolean isSymmetric(TreeNode root) {
+        // Your code here
+        return false;
+    }
+}`,
+    testCases: [
+      { input: 'root = [1,2,2,3,4,4,3]', expectedOutput: 'true' },
+      { input: 'root = [1,2,2,null,3,null,3]', expectedOutput: 'false' },
+      { input: 'root = [1]', expectedOutput: 'true' },
+    ],
+  },
+
+  // =====================================================================
+  // Linked Lists — add Easy (1 problem)
+  // =====================================================================
+  {
+    slug: 'palindrome-linked-list',
+    title: 'Palindrome Linked List',
+    difficulty: 'Easy',
+    category: 'Linked Lists',
+    categorySlug: 'linked-lists',
+    description: `Given the \`head\` of a singly linked list, return \`true\` if it is a **palindrome**, or \`false\` otherwise.
+
+A palindrome reads the same forward and backward. For example, the list 1 → 2 → 2 → 1 is a palindrome.
+
+Can you do it in O(n) time and O(1) space? Think about using slow/fast pointers to find the middle, then reversing the second half.`,
+    examples: [
+      { input: 'head = [1,2,2,1]', output: 'true', explanation: 'The list reads 1,2,2,1 forward and backward.' },
+      { input: 'head = [1,2]', output: 'false', explanation: 'The list reads 1,2 forward but 2,1 backward.' },
+    ],
+    constraints: ['The number of nodes is in the range [1, 10^5].', '0 <= Node.val <= 9'],
+    hints: [
+      'A simple approach: copy values to an array and check if the array is a palindrome.',
+      'For O(1) space: use slow/fast pointers to find the middle of the list.',
+      'Reverse the second half in place, then compare with the first half node by node.',
+    ],
+    starterCode: `public class Solution {
+    /**
+     * Definition for singly-linked list.
+     * public class ListNode {
+     *     int val;
+     *     ListNode next;
+     *     ListNode(int val) { this.val = val; }
+     * }
+     */
+    public boolean isPalindrome(ListNode head) {
+        // Your code here
+        return false;
+    }
+}`,
+    testCases: [
+      { input: 'head = [1,2,2,1]', expectedOutput: 'true' },
+      { input: 'head = [1,2]', expectedOutput: 'false' },
+      { input: 'head = [1]', expectedOutput: 'true' },
+    ],
+  },
+
+  // =====================================================================
+  // Stacks — variety (1 problem)
+  // =====================================================================
+  {
+    slug: 'next-greater-element',
+    title: 'Next Greater Element I',
+    difficulty: 'Easy',
+    category: 'Stacks & Queues',
+    categorySlug: 'stacks-and-queues',
+    description: `You are given two distinct 0-indexed integer arrays \`nums1\` and \`nums2\`, where \`nums1\` is a subset of \`nums2\`. For each element in \`nums1\`, find the **next greater element** of that element in \`nums2\`.
+
+The next greater element of \`nums1[i]\` in \`nums2\` is the first element to the right of \`nums2[j]\` (where \`nums2[j] == nums1[i]\`) that is greater than \`nums2[j]\`. If no such element exists, the answer is -1.
+
+Return an array of the next greater elements for each value in \`nums1\`.`,
+    examples: [
+      { input: 'nums1 = [4,1,2], nums2 = [1,3,4,2]', output: '[-1,3,-1]', explanation: 'For 4, no next greater in nums2. For 1, next greater is 3. For 2, no next greater.' },
+      { input: 'nums1 = [2,4], nums2 = [1,2,3,4]', output: '[3,-1]', explanation: 'For 2, next greater is 3. For 4, no next greater element.' },
+    ],
+    constraints: ['1 <= nums1.length <= nums2.length <= 1000', '0 <= nums1[i], nums2[i] <= 10^4', 'All values in nums1 and nums2 are unique.', 'All values of nums1 also appear in nums2.'],
+    hints: [
+      'Brute force: for each element in nums1, find it in nums2 and scan right for a greater element.',
+      'Optimize: use a monotonic decreasing stack to precompute next greater elements for all values in nums2.',
+      'Traverse nums2, maintain a stack. Pop elements smaller than current and map them to current as their next greater. Store results in a HashMap.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Find the next greater element for each element in nums1
+     * based on their positions in nums2.
+     */
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        // Your code here
+        return new int[]{};
+    }
+}`,
+    testCases: [
+      { input: 'nums1 = [4,1,2], nums2 = [1,3,4,2]', expectedOutput: '[-1,3,-1]' },
+      { input: 'nums1 = [2,4], nums2 = [1,2,3,4]', expectedOutput: '[3,-1]' },
+      { input: 'nums1 = [1], nums2 = [1,2]', expectedOutput: '[2]' },
+    ],
+  },
+
+  // =====================================================================
+  // Graphs — Easy entry (1 problem)
+  // =====================================================================
+  {
+    slug: 'flood-fill',
+    title: 'Flood Fill',
+    difficulty: 'Easy',
+    category: 'Graphs',
+    categorySlug: 'graphs',
+    description: `You are given an \`m x n\` integer grid \`image\` where \`image[i][j]\` represents the pixel value. You are also given three integers \`sr\`, \`sc\`, and \`color\`. Perform a **flood fill** on the image starting from the pixel \`image[sr][sc]\`.
+
+To perform a flood fill, consider the starting pixel, plus any pixels connected 4-directionally to it that share the same original color, plus any pixels connected 4-directionally to those, and so on. Replace the color of all the connected pixels with \`color\`.
+
+This is the same operation as the "paint bucket" tool in image editing software. Return the modified image.`,
+    examples: [
+      { input: 'image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, color = 2', output: '[[2,2,2],[2,2,0],[2,0,1]]', explanation: 'Starting pixel is image[1][1] = 1. All 4-directionally connected pixels with value 1 are changed to 2.' },
+      { input: 'image = [[0,0,0],[0,0,0]], sr = 0, sc = 0, color = 0', output: '[[0,0,0],[0,0,0]]', explanation: 'The starting pixel is already the target color, so no changes are made.' },
+    ],
+    constraints: ['m == image.length', 'n == image[i].length', '1 <= m, n <= 50', '0 <= image[i][j], color < 2^16', '0 <= sr < m', '0 <= sc < n'],
+    hints: [
+      'Use DFS or BFS starting from (sr, sc). Visit all 4-directionally connected cells with the same original color.',
+      'Important edge case: if the starting pixel already has the target color, return immediately to avoid infinite loops.',
+      'DFS: change current pixel to new color, then recurse on all 4 neighbors that have the original color.',
+    ],
+    starterCode: `public class Solution {
+    /**
+     * Perform flood fill starting from image[sr][sc] with the given color.
+     */
+    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+        // Your code here
+        return image;
+    }
+}`,
+    testCases: [
+      { input: 'image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, color = 2', expectedOutput: '[[2,2,2],[2,2,0],[2,0,1]]' },
+      { input: 'image = [[0,0,0],[0,0,0]], sr = 0, sc = 0, color = 0', expectedOutput: '[[0,0,0],[0,0,0]]' },
+      { input: 'image = [[0,0,0],[0,1,1]], sr = 1, sc = 1, color = 1', expectedOutput: '[[0,0,0],[0,1,1]]' },
+    ],
+  },
+
+  // =====================================================================
+  // Backtracking — more variety (3 problems)
+  // =====================================================================
+  {
+    slug: 'letter-combinations-phone',
+    title: 'Letter Combinations of a Phone Number',
+    difficulty: 'Medium',
+    category: 'Backtracking',
+    categorySlug: 'backtracking',
+    description: `Given a string containing digits from \`2-9\` inclusive, return all possible **letter combinations** that the number could represent. Return the answer in any order.
+
+The mapping of digits to letters is the same as on a telephone keypad: 2→abc, 3→def, 4→ghi, 5→jkl, 6→mno, 7→pqrs, 8→tuv, 9→wxyz.
+
+Note that 1 does not map to any letters. If the input is empty, return an empty list.`,
+    examples: [
+      { input: 'digits = "23"', output: '["ad","ae","af","bd","be","bf","cd","ce","cf"]', explanation: 'Digit 2 maps to "abc" and digit 3 maps to "def". All combinations of one letter from each are generated.' },
+      { input: 'digits = ""', output: '[]', explanation: 'Empty input produces no combinations.' },
+      { input: 'digits = "2"', output: '["a","b","c"]', explanation: 'Digit 2 maps to "abc".' },
+    ],
+    constraints: ['0 <= digits.length <= 4', 'digits[i] is a digit in the range [2, 9].'],
+    hints: [
+      'Use backtracking: build combinations one digit at a time.',
+      'Create a mapping from each digit to its letters. For each digit, try each possible letter and recurse.',
+      'Base case: when the current combination length equals the input length, add it to results.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return all possible letter combinations for the given digits.
+     */
+    public List<String> letterCombinations(String digits) {
+        // Your code here
+        return new ArrayList<>();
+    }
+}`,
+    testCases: [
+      { input: 'digits = "23"', expectedOutput: '["ad","ae","af","bd","be","bf","cd","ce","cf"]' },
+      { input: 'digits = ""', expectedOutput: '[]' },
+      { input: 'digits = "2"', expectedOutput: '["a","b","c"]' },
+    ],
+  },
+  {
+    slug: 'generate-parentheses',
+    title: 'Generate Parentheses',
+    difficulty: 'Medium',
+    category: 'Backtracking',
+    categorySlug: 'backtracking',
+    description: `Given \`n\` pairs of parentheses, write a function to generate all combinations of **well-formed parentheses**.
+
+A string of parentheses is well-formed if every opening parenthesis has a corresponding closing parenthesis and they are properly nested.
+
+For example, with n=3, one valid combination is "((()))" and another is "(()())".`,
+    examples: [
+      { input: 'n = 3', output: '["((()))","(()())","(())()","()(())","()()()"]', explanation: 'All 5 valid combinations of 3 pairs of parentheses.' },
+      { input: 'n = 1', output: '["()"]', explanation: 'Only one valid combination with 1 pair.' },
+    ],
+    constraints: ['1 <= n <= 8'],
+    hints: [
+      'Use backtracking. Track the count of open and close parentheses used so far.',
+      'You can add an open parenthesis if open < n. You can add a close parenthesis if close < open.',
+      'Base case: when the string length equals 2*n, add it to results.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Generate all combinations of well-formed parentheses.
+     */
+    public List<String> generateParenthesis(int n) {
+        // Your code here
+        return new ArrayList<>();
+    }
+}`,
+    testCases: [
+      { input: 'n = 3', expectedOutput: '["((()))","(()())","(())()","()(())","()()()"]' },
+      { input: 'n = 1', expectedOutput: '["()"]' },
+      { input: 'n = 2', expectedOutput: '["(())","()()"]' },
+    ],
+  },
+  {
+    slug: 'n-queens',
+    title: 'N-Queens',
+    difficulty: 'Hard',
+    category: 'Backtracking',
+    categorySlug: 'backtracking',
+    description: `The **N-Queens** puzzle is the problem of placing \`n\` queens on an \`n x n\` chessboard such that no two queens attack each other. A queen attacks another if they share the same row, column, or diagonal.
+
+Given an integer \`n\`, return all distinct solutions to the N-Queens puzzle. Each solution is a list of strings where \`'Q'\` represents a queen and \`'.'\` represents an empty space.
+
+This is a classic backtracking problem that demonstrates constraint satisfaction and pruning.`,
+    examples: [
+      { input: 'n = 4', output: '[[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]', explanation: 'There are exactly 2 distinct solutions for the 4-Queens puzzle.' },
+      { input: 'n = 1', output: '[["Q"]]', explanation: 'Only one way to place 1 queen on a 1x1 board.' },
+    ],
+    constraints: ['1 <= n <= 9'],
+    hints: [
+      'Place queens row by row. For each row, try each column and check if placement is valid.',
+      'Track which columns and diagonals are under attack. Two cells share a diagonal if row1-col1 == row2-col2 or row1+col1 == row2+col2.',
+      'Use three sets to track attacked columns, forward diagonals (row-col), and backward diagonals (row+col). Backtrack when no valid column exists.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return all distinct N-Queens solutions.
+     */
+    public List<List<String>> solveNQueens(int n) {
+        // Your code here
+        return new ArrayList<>();
+    }
+}`,
+    testCases: [
+      { input: 'n = 4', expectedOutput: '[[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]' },
+      { input: 'n = 1', expectedOutput: '[["Q"]]' },
+      { input: 'n = 2', expectedOutput: '[]' },
+    ],
+  },
+
+  // =====================================================================
+  // DP — more variety (2 problems)
+  // =====================================================================
+  {
+    slug: 'maximum-product-subarray',
+    title: 'Maximum Product Subarray',
+    difficulty: 'Medium',
+    category: 'Dynamic Programming',
+    categorySlug: 'dynamic-programming',
+    description: `Given an integer array \`nums\`, find a subarray that has the **largest product**, and return the product.
+
+A subarray is a contiguous non-empty sequence of elements within an array. The tricky part is handling negative numbers — a negative times a negative becomes positive.
+
+The test cases are generated so that the answer fits in a 32-bit integer.`,
+    examples: [
+      { input: 'nums = [2,3,-2,4]', output: '6', explanation: 'The subarray [2,3] has the largest product 6.' },
+      { input: 'nums = [-2,0,-1]', output: '0', explanation: 'The result cannot be 2, because [-2,-1] is not a contiguous subarray.' },
+    ],
+    constraints: ['1 <= nums.length <= 2 * 10^4', '-10 <= nums[i] <= 10', 'The product of any subarray fits in a 32-bit integer.'],
+    hints: [
+      'Unlike maximum subarray sum, negatives complicate things because two negatives make a positive.',
+      'Track both the maximum and minimum product ending at each position. The minimum could become the maximum when multiplied by a negative.',
+      'At each step: newMax = max(nums[i], maxSoFar * nums[i], minSoFar * nums[i]). Similarly for newMin. Update global max.',
+    ],
+    starterCode: `public class Solution {
+    /**
+     * Find the contiguous subarray with the largest product.
+     */
+    public int maxProduct(int[] nums) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'nums = [2,3,-2,4]', expectedOutput: '6' },
+      { input: 'nums = [-2,0,-1]', expectedOutput: '0' },
+      { input: 'nums = [-2,3,-4]', expectedOutput: '24' },
+      { input: 'nums = [-2]', expectedOutput: '-2' },
+    ],
+  },
+  {
+    slug: 'partition-equal-subset-sum',
+    title: 'Partition Equal Subset Sum',
+    difficulty: 'Medium',
+    category: 'Dynamic Programming',
+    categorySlug: 'dynamic-programming',
+    description: `Given an integer array \`nums\`, return \`true\` if you can partition the array into two subsets such that the **sum of elements** in both subsets is equal, or \`false\` otherwise.
+
+This is equivalent to asking: is there a subset of \`nums\` that sums to \`totalSum / 2\`? If the total sum is odd, partition is impossible.
+
+This is a classic **0/1 Knapsack** variant that can be solved with dynamic programming.`,
+    examples: [
+      { input: 'nums = [1,5,11,5]', output: 'true', explanation: 'The array can be partitioned as [1,5,5] and [11], both summing to 11.' },
+      { input: 'nums = [1,2,3,5]', output: 'false', explanation: 'The array cannot be partitioned into equal sum subsets.' },
+    ],
+    constraints: ['1 <= nums.length <= 200', '1 <= nums[i] <= 100'],
+    hints: [
+      'If the total sum is odd, return false immediately.',
+      'This reduces to: can we find a subset that sums to totalSum / 2? This is the subset sum problem.',
+      'Use a boolean DP array where dp[j] means "can we achieve sum j?". For each num, update dp[j] = dp[j] || dp[j - num] (iterate j from target down to num).',
+    ],
+    starterCode: `public class Solution {
+    /**
+     * Return true if the array can be partitioned into two equal-sum subsets.
+     */
+    public boolean canPartition(int[] nums) {
+        // Your code here
+        return false;
+    }
+}`,
+    testCases: [
+      { input: 'nums = [1,5,11,5]', expectedOutput: 'true' },
+      { input: 'nums = [1,2,3,5]', expectedOutput: 'false' },
+      { input: 'nums = [1,1]', expectedOutput: 'true' },
+      { input: 'nums = [2,2,1,1]', expectedOutput: 'true' },
+    ],
+  },
+
+  // =====================================================================
+  // Binary Search — dedicated category (3 problems)
+  // =====================================================================
+  {
+    slug: 'first-bad-version',
+    title: 'First Bad Version',
+    difficulty: 'Easy',
+    category: 'Binary Search',
+    categorySlug: 'binary-search',
+    description: `You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check. Since each version is developed based on the previous version, all the versions after a bad version are also bad.
+
+You are given an API \`boolean isBadVersion(int version)\` which returns whether \`version\` is bad. Implement a function to find the **first bad version**. You should minimize the number of calls to the API.
+
+This is a classic binary search on a boolean predicate — the search space is [1, n] and the predicate transitions from false to true.`,
+    examples: [
+      { input: 'n = 5, bad = 4', output: '4', explanation: 'isBadVersion(3) = false, isBadVersion(4) = true, isBadVersion(5) = true. So the first bad version is 4.' },
+      { input: 'n = 1, bad = 1', output: '1', explanation: 'Only one version and it is bad.' },
+    ],
+    constraints: ['1 <= bad <= n <= 2^31 - 1'],
+    hints: [
+      'Binary search: if mid is bad, the first bad version is at mid or to its left. If mid is good, it is to the right.',
+      'Be careful with integer overflow when computing mid. Use lo + (hi - lo) / 2.',
+      'Set lo = 1, hi = n. While lo < hi: if isBadVersion(mid), hi = mid; else lo = mid + 1. Return lo.',
+    ],
+    starterCode: `public class Solution {
+    /**
+     * Assume isBadVersion(int version) is defined.
+     * Find the first bad version in [1, n].
+     */
+    // private boolean isBadVersion(int version) { } // provided by system
+
+    public int firstBadVersion(int n) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'n = 5, bad = 4', expectedOutput: '4' },
+      { input: 'n = 1, bad = 1', expectedOutput: '1' },
+      { input: 'n = 10, bad = 7', expectedOutput: '7' },
+    ],
+  },
+  {
+    slug: 'search-2d-matrix',
+    title: 'Search a 2D Matrix',
+    difficulty: 'Medium',
+    category: 'Binary Search',
+    categorySlug: 'binary-search',
+    description: `You are given an \`m x n\` integer matrix \`matrix\` with the following properties:
+- Each row is sorted in non-decreasing order.
+- The first integer of each row is greater than the last integer of the previous row.
+
+Given an integer \`target\`, return \`true\` if \`target\` is in \`matrix\`, or \`false\` otherwise.
+
+You must write a solution in O(log(m * n)) time complexity. Think of the matrix as a single sorted array.`,
+    examples: [
+      { input: 'matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3', output: 'true', explanation: '3 is found in the first row.' },
+      { input: 'matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13', output: 'false', explanation: '13 is not present in the matrix.' },
+    ],
+    constraints: ['m == matrix.length', 'n == matrix[i].length', '1 <= m, n <= 100', '-10^4 <= matrix[i][j], target <= 10^4'],
+    hints: [
+      'The matrix is essentially a sorted 1D array laid out in rows. Can you do binary search on it?',
+      'Map a 1D index to 2D coordinates: row = index / n, col = index % n.',
+      'Binary search with lo = 0, hi = m*n - 1. Convert mid to (row, col) and compare matrix[row][col] with target.',
+    ],
+    starterCode: `public class Solution {
+    /**
+     * Search for target in the sorted 2D matrix.
+     */
+    public boolean searchMatrix(int[][] matrix, int target) {
+        // Your code here
+        return false;
+    }
+}`,
+    testCases: [
+      { input: 'matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3', expectedOutput: 'true' },
+      { input: 'matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13', expectedOutput: 'false' },
+      { input: 'matrix = [[1]], target = 1', expectedOutput: 'true' },
+    ],
+  },
+  {
+    slug: 'koko-eating-bananas',
+    title: 'Koko Eating Bananas',
+    difficulty: 'Medium',
+    category: 'Binary Search',
+    categorySlug: 'binary-search',
+    description: `Koko loves to eat bananas. There are \`n\` piles of bananas, the \`i-th\` pile has \`piles[i]\` bananas. The guards have gone and will come back in \`h\` hours.
+
+Koko can decide her bananas-per-hour eating speed \`k\`. Each hour, she chooses a pile and eats \`k\` bananas from it. If the pile has less than \`k\` bananas, she eats all of them and won't eat any more during that hour.
+
+Return the **minimum** integer \`k\` such that she can eat all the bananas within \`h\` hours. This is a classic "binary search on the answer" problem.`,
+    examples: [
+      { input: 'piles = [3,6,7,11], h = 8', output: '4', explanation: 'At speed 4: ceil(3/4)+ceil(6/4)+ceil(7/4)+ceil(11/4) = 1+2+2+3 = 8 hours.' },
+      { input: 'piles = [30,11,23,4,20], h = 5', output: '30', explanation: 'She must eat 30 per hour to finish all 5 piles in 5 hours (one pile per hour at max speed).' },
+      { input: 'piles = [30,11,23,4,20], h = 6', output: '23', explanation: 'At speed 23: 2+1+1+1+1 = 6 hours.' },
+    ],
+    constraints: ['1 <= piles.length <= 10^4', 'piles.length <= h <= 10^9', '1 <= piles[i] <= 10^9'],
+    hints: [
+      'The answer is in the range [1, max(piles)]. Can you binary search on k?',
+      'For a given k, compute the total hours needed: sum of ceil(piles[i] / k) for each pile. If total <= h, k is feasible.',
+      'Binary search: lo = 1, hi = max(piles). If canFinish(mid, h), try smaller (hi = mid). Otherwise lo = mid + 1.',
+    ],
+    starterCode: `public class Solution {
+    /**
+     * Find the minimum eating speed k to eat all bananas within h hours.
+     */
+    public int minEatingSpeed(int[] piles, int h) {
+        // Your code here
+        return 0;
+    }
+}`,
+    testCases: [
+      { input: 'piles = [3,6,7,11], h = 8', expectedOutput: '4' },
+      { input: 'piles = [30,11,23,4,20], h = 5', expectedOutput: '30' },
+      { input: 'piles = [30,11,23,4,20], h = 6', expectedOutput: '23' },
+    ],
+  },
+
+  // =====================================================================
+  // Intervals — new category (2 problems)
+  // =====================================================================
+  {
+    slug: 'meeting-rooms',
+    title: 'Meeting Rooms',
+    difficulty: 'Easy',
+    category: 'Intervals',
+    categorySlug: 'intervals',
+    description: `Given an array of meeting time intervals where \`intervals[i] = [start_i, end_i]\`, determine if a person could **attend all meetings**.
+
+A person can attend all meetings if no two meetings overlap. Two meetings overlap if one starts before the other ends.
+
+Sort the intervals by start time and check for overlaps between consecutive meetings.`,
+    examples: [
+      { input: 'intervals = [[0,30],[5,10],[15,20]]', output: 'false', explanation: 'Meeting [0,30] overlaps with [5,10] and [15,20].' },
+      { input: 'intervals = [[7,10],[2,4]]', output: 'true', explanation: 'After sorting: [2,4] and [7,10] do not overlap.' },
+    ],
+    constraints: ['0 <= intervals.length <= 10^4', 'intervals[i].length == 2', '0 <= start_i < end_i <= 10^6'],
+    hints: [
+      'Sort intervals by start time.',
+      'After sorting, check if any interval starts before the previous one ends.',
+      'If intervals[i][0] < intervals[i-1][1] for any i, return false.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Return true if a person can attend all meetings without overlap.
+     */
+    public boolean canAttendMeetings(int[][] intervals) {
+        // Your code here
+        return false;
+    }
+}`,
+    testCases: [
+      { input: 'intervals = [[0,30],[5,10],[15,20]]', expectedOutput: 'false' },
+      { input: 'intervals = [[7,10],[2,4]]', expectedOutput: 'true' },
+      { input: 'intervals = []', expectedOutput: 'true' },
+      { input: 'intervals = [[1,5],[5,10]]', expectedOutput: 'true' },
+    ],
+  },
+  {
+    slug: 'insert-interval',
+    title: 'Insert Interval',
+    difficulty: 'Medium',
+    category: 'Intervals',
+    categorySlug: 'intervals',
+    description: `You are given an array of non-overlapping intervals \`intervals\` where \`intervals[i] = [start_i, end_i]\` sorted in ascending order by \`start_i\`. You are also given an interval \`newInterval = [start, end]\`.
+
+Insert \`newInterval\` into \`intervals\` such that \`intervals\` is still sorted in ascending order by \`start_i\` and \`intervals\` still does not have any overlapping intervals. Merge overlapping intervals if necessary.
+
+Return \`intervals\` after the insertion.`,
+    examples: [
+      { input: 'intervals = [[1,3],[6,9]], newInterval = [2,5]', output: '[[1,5],[6,9]]', explanation: 'newInterval [2,5] overlaps with [1,3], merging into [1,5].' },
+      { input: 'intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]', output: '[[1,2],[3,10],[12,16]]', explanation: 'newInterval [4,8] overlaps with [3,5],[6,7],[8,10], merging into [3,10].' },
+    ],
+    constraints: ['0 <= intervals.length <= 10^4', 'intervals[i].length == 2', '0 <= start_i <= end_i <= 10^5', 'intervals is sorted by start_i.', 'newInterval.length == 2', '0 <= start <= end <= 10^5'],
+    hints: [
+      'Add all intervals that end before the new interval starts (no overlap on the left).',
+      'Merge all intervals that overlap with newInterval by expanding newInterval\'s start and end.',
+      'Add the merged interval, then add all remaining intervals that start after newInterval ends.',
+    ],
+    starterCode: `import java.util.*;
+
+public class Solution {
+    /**
+     * Insert newInterval into intervals and merge if necessary.
+     */
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        // Your code here
+        return new int[][]{};
+    }
+}`,
+    testCases: [
+      { input: 'intervals = [[1,3],[6,9]], newInterval = [2,5]', expectedOutput: '[[1,5],[6,9]]' },
+      { input: 'intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]', expectedOutput: '[[1,2],[3,10],[12,16]]' },
+      { input: 'intervals = [], newInterval = [5,7]', expectedOutput: '[[5,7]]' },
     ],
   },
 ];
