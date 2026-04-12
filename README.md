@@ -96,36 +96,16 @@ AlgoAndDS/
 
 ---
 
-## 🚀 Deploy to Vercel (Recommended)
+## 🚀 Deploy to GitHub Pages (Free)
 
-The app works on Vercel's free tier with **zero configuration** — code execution via Judge0 CE is built-in.
+The app deploys automatically via GitHub Actions on every push:
 
-```bash
-# 1. Push to GitHub
-git remote add origin https://github.com/<your-username>/AlgoAndDS.git
-git push -u origin master
+1. Go to your repo → **Settings** → **Pages**
+2. Under "Build and deployment", set **Source** = **GitHub Actions**
+3. Push to `master` — the workflow builds & deploys automatically
+4. Your site will be live at: `https://<username>.github.io/AlgoAndDS`
 
-# 2. Deploy on Vercel
-#    Go to https://vercel.com/new
-#    Import your GitHub repo
-#    Set Root Directory to: webapp
-#    Click Deploy — that's it!
-```
-
-### Vercel Settings
-| Setting | Value |
-|---------|-------|
-| **Root Directory** | `webapp` |
-| **Framework** | Next.js (auto-detected) |
-| **Build Command** | `npm run build` (default) |
-| **Output Directory** | `.next` (default) |
-
-### Optional Environment Variables
-| Variable | Purpose | Default |
-|----------|---------|---------|
-| `NEXT_PUBLIC_JUDGE0_URL` | Custom Judge0 instance | `https://ce.judge0.com` |
-
-> **Code execution works immediately** — Judge0 CE is free and requires no API key.
+> **Code execution works on GitHub Pages** — it calls Judge0 directly from the browser, no server needed.
 
 ---
 

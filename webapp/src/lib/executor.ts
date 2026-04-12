@@ -1,6 +1,6 @@
-// Code execution via Judge0 CE (free, no API key required)
-// Override with NEXT_PUBLIC_JUDGE0_URL env variable for self-hosted instances
-const JUDGE0_URL = process.env.NEXT_PUBLIC_JUDGE0_URL || "https://ce.judge0.com";
+// Client-side code execution via Judge0 CE (free, no API key required)
+// This runs entirely in the browser — no server-side API route needed.
+const JUDGE0_URL = "https://ce.judge0.com";
 const JAVA_LANGUAGE_ID = 62; // Java (OpenJDK 13.0.1)
 
 export interface ExecutionResult {
@@ -247,8 +247,8 @@ export function parseExecutionOutput(stdout: string, stderr: string, exitCode: n
 export async function executeCode(
   javaSource: string
 ): Promise<{ stdout: string; stderr: string; exitCode: number }> {
-  const b64encode = (s: string) => Buffer.from(s).toString("base64");
-  const b64decode = (s: string) => s ? Buffer.from(s, "base64").toString("utf-8") : "";
+  const b64encode = (s: string) => btoa(unescape(encodeURIComponent(s)));
+  const b64decode = (s: string) => s ? decodeURIComponent(escape(atob(s))) : "";
 
   // Submit to Judge0 CE
   const submitUrl = `${JUDGE0_URL}/submissions?base64_encoded=true&wait=true`;
