@@ -35,9 +35,9 @@ body {
   color: #cbd5e1;
   line-height: 1.75;
 }
-.prose-dark h1 { color: #f1f5f9; font-size: 2rem; font-weight: 700; margin: 2rem 0 1rem; border-bottom: 1px solid #1e293b; padding-bottom: 0.5rem; }
-.prose-dark h2 { color: #f1f5f9; font-size: 1.5rem; font-weight: 600; margin: 1.75rem 0 0.75rem; }
-.prose-dark h3 { color: #e2e8f0; font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+.prose-dark h1 { color: #f1f5f9; font-size: 2rem; font-weight: 700; margin: 2rem 0 1rem; border-bottom: 1px solid #1e293b; padding-bottom: 0.5rem; scroll-margin-top: 5rem; }
+.prose-dark h2 { color: #f1f5f9; font-size: 1.5rem; font-weight: 600; margin: 1.75rem 0 0.75rem; scroll-margin-top: 5rem; }
+.prose-dark h3 { color: #e2e8f0; font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 0.5rem; scroll-margin-top: 5rem; }
 .prose-dark h4 { color: #e2e8f0; font-size: 1.1rem; font-weight: 600; margin: 1.25rem 0 0.5rem; }
 .prose-dark p { margin: 0.75rem 0; }
 .prose-dark a { color: #10b981; text-decoration: underline; }
