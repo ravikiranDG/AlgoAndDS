@@ -21,7 +21,7 @@ function extractText(children: React.ReactNode): string {
   return React.Children.toArray(children)
     .map((child) => {
       if (typeof child === "string") return child;
-      if (React.isValidElement(child) && child.props?.children) {
+      if (React.isValidElement<{ children?: React.ReactNode }>(child) && child.props?.children) {
         return extractText(child.props.children);
       }
       return "";
